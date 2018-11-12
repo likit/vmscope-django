@@ -1,6 +1,6 @@
 import os
 from django.db import models
-from datetime import datetime
+from django.utils import timezone
 
 # Create your models here.
 class ArtifactType(models.Model):
@@ -36,7 +36,7 @@ class ArtifactImage(models.Model):
     def image_name(self, filename):
         extension = os.path.splitext(filename)[-1]
         return '{}/{}'.format(self.artifact.group.name,
-                   datetime.now().strftime('%Y%m%d_%H%M%S'), extension)
+                   timezone.now().strftime('%Y%m%d_%H%M%S'), extension)
 
     image = models.ImageField(max_length=200,
                               upload_to=image_name)
@@ -88,10 +88,12 @@ class ParasiteImage(models.Model):
     def image_name(self, filename):
         extension = os.path.splitext(filename)[-1]
         return '{}/{}/{}{}'.format(self.parasite.genus, self.stage,
-                    datetime.now().strftime('%Y%m%d_%H%M%S'), extension)
+                    timezone.now().strftime('%Y%m%d_%H%M%S'), extension)
 
     image = models.ImageField(max_length=200,
                               upload_to=image_name)
 
     def __str__(self):
         return '{}'.format(self.image.url)
+
+
