@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'taggit',
     'contents',
     'microscope.apps.MicroscopeConfig',
+    'main.apps.MainConfig',
 ]
 
 MIDDLEWARE = [
