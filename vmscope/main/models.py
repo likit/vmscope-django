@@ -1,7 +1,17 @@
 from django.db import models
 from django.utils import timezone
 
+
+class Discipline(models.Model):
+    name = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name
+
+
 class Program(models.Model):
+    discipline = models.ForeignKey(Discipline, related_name='programs',
+                                   on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
     description = models.TextField(blank=True, null=True)
     target = models.CharField(max_length=200)
