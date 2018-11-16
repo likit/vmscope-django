@@ -101,6 +101,7 @@ class MicroscopeSection(models.Model):
     session = models.ForeignKey('main.Session', related_name='microscope_sections',
                                 on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
+    desc = models.TextField()
 
     def __str__(self):
         return self.name
