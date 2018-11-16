@@ -1,0 +1,21 @@
+{% load static %}
+{% include 'base.html' %}
+
+{% block page_content %}
+<section class="section">
+    <h1 class="title">
+        <span class="icon">
+            <i class="fas fa-microscope"></i>
+        </span>&nbsp;
+        Virtual Microscope</h1>
+    <div class="panel">
+        <div class="panel-heading">
+            <h3>Section: {{ scope.name }}</h3>
+        </div>
+        <div class="panel-block">
+            <p>{{ scope.desc }}</p>
+        </div>
+    </div>
+</section>
+{% endblock %}
+

@@ -10,6 +10,23 @@
         <div class="panel-block">
             <p>{{ session.description }}</p>
         </div>
+        <div class="panel-block">
+            <div class="panel">
+                <div class="panel-heading">
+                    <span class="icon">
+                        <i class="fas fa-microscope"></i>
+                    </span>&nbsp;
+                    Virtual Microscope
+                </div>
+                <div class="panel-block">
+                    <ul>
+                        {% for ms in session.microscope_sections.all %}
+                        <li><a href="{% url 'microscope' ms.pk %}">{{ ms.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 {% endblock %}

@@ -15,5 +15,6 @@ urlpatterns = [
     re_path(r'^cmsadmin/', include(wagtailadmin_urls)),
     re_path(r'^documents/', include(wagtaildocs_urls)),
     re_path(r'^pages/', include(wagtail_urls)),
+    path('microscope/', include(microscope_urls)),
     path('', include(main_urls), name='main'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
