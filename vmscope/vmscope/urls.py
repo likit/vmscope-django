@@ -9,6 +9,7 @@ from wagtail.core import urls as wagtail_urls
 
 from microscope import urls as microscope_urls
 from main import urls as main_urls
+from api import urls as api_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -16,5 +17,6 @@ urlpatterns = [
     re_path(r'^documents/', include(wagtaildocs_urls)),
     re_path(r'^pages/', include(wagtail_urls)),
     path('microscope/', include(microscope_urls)),
+    path('api/', include(api_urls)),
     path('', include(main_urls), name='main'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

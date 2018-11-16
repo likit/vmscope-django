@@ -1,4 +1,5 @@
 import os
+import random
 from django.db import models
 from django.utils import timezone
 
@@ -107,12 +108,50 @@ class MicroscopeSection(models.Model):
         return self.name
 
 
-class MicroscopeItem(models.Model):
-    section = models.ForeignKey(MicroscopeSection, related_name='items',
+class ParasiteComponent(models.Model):
+    section = models.ForeignKey(MicroscopeSection, related_name='parasite_comps',
                                 on_delete=models.CASCADE)
-    item = models.ForeignKey(ParasiteImage, related_name='microscope_items',
-                             on_delete=models.DO_NOTHING)
+    parasite = models.ForeignKey(Parasite, on_delete=models.CASCADE)
+    stage = models.ForeignKey(ParasiteStage, on_delete=models.CASCADE)
     number = models.IntegerField(default=1)
+
+    def save(self, *args, **kwargs):
+        parasite_ = set(self.parasite.images.all())
+        stage_ = set(self.stage.images.all())
+        parasites = list(parasite_.intersection(stage_))
+        for i in range(self.number):
+            img = random.choice(parasites)
+            new_item = ParasiteItem(section=self.section, item=img)
+            new_item.save()
+        super(ParasiteComponent, self).save(*args, **kwargs)
+
+
+class ArtifactComponent(models.Model):
+    section = models.ForeignKey(MicroscopeSection, related_name='artifact_comps',
+                                on_delete=models.CASCADE)
+    artifact = models.ForeignKey(Artifact, on_delete=models.CASCADE)
+    number = models.IntegerField(default=1)
+    def save(self, *args, **kwargs):
+        artifacts = self.artifact.images.all()
+        for i in range(self.number):
+            img = random.choice(artifacts)
+            new_item = ArtifactItem(section=self.section,
+                                    item=img)
+            new_item.save()
+        super(ArtifactComponent, self).save(*args, **kwargs)
+
+
+class ParasiteItem(models.Model):
+    section = models.ForeignKey(MicroscopeSection, related_name='parasites',
+                                on_delete=models.CASCADE)
+    item = models.ForeignKey(ParasiteImage, on_delete=models.CASCADE)
+
+
+class ArtifactItem(models.Model):
+    section = models.ForeignKey(MicroscopeSection, related_name='artifacts',
+                                on_delete=models.CASCADE)
+    item = models.ForeignKey(ArtifactImage, on_delete=models.CASCADE)
+
 
     def __str__(self):
         return '{} {} {}'.format(self.number, self.item.parasite, self.item.stage)

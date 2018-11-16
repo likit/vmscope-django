@@ -53,6 +53,8 @@ INSTALLED_APPS = [
     'contents',
     'microscope.apps.MicroscopeConfig',
     'main.apps.MainConfig',
+    'rest_framework',
+    'api.apps.ApiConfig',
 ]
 
 MIDDLEWARE = [
