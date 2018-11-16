@@ -97,3 +97,21 @@ class ParasiteImage(models.Model):
         return '{}'.format(self.image.url)
 
 
+class MicroscopeSection(models.Model):
+    session = models.ForeignKey('main.Session', related_name='microscope_sections',
+                                on_delete=models.CASCADE)
+    name = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name
+
+
+class MicroscopeItem(models.Model):
+    section = models.ForeignKey(MicroscopeSection, related_name='items',
+                                on_delete=models.CASCADE)
+    item = models.ForeignKey(ParasiteImage, related_name='microscope_items',
+                             on_delete=models.DO_NOTHING)
+    number = models.IntegerField(default=1)
+
+    def __str__(self):
+        return '{} {} {}'.format(self.number, self.item.parasite, self.item.stage)
