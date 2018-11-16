@@ -72,7 +72,7 @@ ROOT_URLCONF = 'vmscope.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates/vmscope')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

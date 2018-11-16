@@ -1,14 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Program Page</title>
-</head>
-<body>
-    <h1>Program:</h1>
-    <h3>Sessions:</h3>
-    <ul>
-        <li>Session 1</li>
-    </ul>
-</body>
-</html>
+{% include 'base.html' %}
+{% block page_content %}
+<section class="section">
+    <h1 class="title">{{ program.name|title }}</h1>
+    <p>{{ program.description }}</p>
+    <div class="panel">
+        <div class="panel-heading">
+            <h3 class="subtitle">Sessions: {{ session.name }}</h3>
+        </div>
+        <div class="panel-block">
+            <table class="table">
+                <thead>
+                    <th>Name</th>
+                    <th>Description</th>
+                </thead>
+                <tbody>
+                {% for session in program.sessions.all %}
+                <tr>
+                    <td>
+                        <a href="{% url 'session' session.pk %}">{{ session.name|title }}</a>
+                    </td>
+                    <td>
+                        {{ session.description }}
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}

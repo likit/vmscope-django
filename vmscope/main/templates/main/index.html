@@ -1,16 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Virtual Microscope</title>
-</head>
-<body>
-    <h1>Welcome to the microbiology learning platform</h1>
-    <h3>We provided online learning programs for:</h3>
-    <ul>
-        <li>Parasitology</li>
-        <li>Microscopy</li>
-        <li>Bacteriology</li>
-    </ul>
-</body>
-</html>
+{% include "base.html" %}
+{% block page_content %}
+<section class="section">
+    <h1 class="title">Welcome to the microbiology learning platform</h1>
+    <h3 class="subtitle">We provided online learning programs for:</h3>
+    <div class="columns">
+    {% for subject in discipline_list %}
+        <div class="column">
+            <div class="box has-text-centered">
+                <a href="{% url 'discipline' subject.pk %}" class="title is-size-5 has-text-info">{{ subject|title }}</a>
+            </div>
+        </div>
+    {% if forloop.counter|divisibleby:3 %}
+    </div>
+    <div class="columns">
+    {% endif %}
+    {% endfor %}
+    </div>
+</section>
+{% endblock %}

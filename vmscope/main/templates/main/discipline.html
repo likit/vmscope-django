@@ -1,0 +1,26 @@
+{% include 'base.html' %}
+{% block page_content %}
+<section class="section">
+    <h1 class="title">{{ discipline.name|title }}</h1>
+    <table class="table">
+        <thead>
+            <th></th>
+            <th>Program</th>
+            <th>Target</th>
+        </thead>
+        {% for program in discipline.programs.all %}
+        <tr>
+            <td>
+                <a href="{% url 'program' program.pk %}">
+                <span class="icon">
+                    <i class="fas fa-chevron-circle-right"></i>
+                </span>
+                </a>
+            </td>
+            <td>{{ program.name }}</td>
+            <td>{{ program.target }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</section>
+{% endblock %}
