@@ -10,7 +10,7 @@ var viewModel = function() {
   var self = this;
   self.lastFoundEggInfoId = ko.observable(0);
   self.foundEggs = ko.observableArray([]);
-  self.numEggs = ko.observable(35);
+  self.numEggs = ko.observable();
   self.isZoomed = ko.observable(false);
   self.numEggsFound = ko.computed(function() {
     return ko.utils.arrayFilter(self.foundEggs(), function(item) {
@@ -45,15 +45,10 @@ var eggs = [];
 var dusts = [];
 var artifacts = [];
 var stageTemp = [];
-var numBact = 500;
 var eggInfoId = [1,1,1,1,5,3,3,3,3,7,7,7,7,4,4,4,6,6,6,6];
-var eggList = [];
-var bubbles = [];
-var bgDebris = [];
-var droplets = [];
-var eggLikes = [];
-var debris = [];
 var floatingDebris = [];
+var parasite_list = [];
+var artifact_list = [];
 
 
 var stage,
@@ -108,19 +103,40 @@ function preload() {
     queue.addEventListener("complete", draw);
     var items = [];
 
-    $.when($.getJSON('/api/microscope/1').then(function(data) {
-        $.each(data['parasites'], function(idx,d) {
-            console.log(d)
-            items.push({
-                id: d['pk'],
-                src: d['item']['image']
+    $.when($.getJSON('/api/microscope/1')).then(function(data) {
+        $.each(data['parasite_components'], function(_,cmp) {
+            var item = cmp['parasite'];
+            var images = [];
+            $.each(item['images'], function(_, d){
+                items.push({
+                    id: d['pk'],
+                    src: d['image']
+                });
+                images.push(d['pk']);
             });
-            eggList.push(d['pk']);
+            parasite_list.push({
+                number: cmp['number'],
+                images: images
+            });
+        });
+        $.each(data['artifact_components'], function(_,cmp) {
+            var item = cmp['artifact'];
+            var images = [];
+            $.each(item['images'], function(_, d) {
+                items.push({
+                    id: d['pk'],
+                    src: d['image']
+                });
+                images.push(d['pk']);
+            });
+            artifact_list.push({
+                number: cmp['number'],
+                oscillate: cmp.oscillate,
+                images: images
+            });
         });
         queue.loadManifest(items);
-        console.log(items, eggList);
-        })
-    );
+    });
 }
 
 function run() {
@@ -185,130 +201,66 @@ function draw() {
     circle.graphics.drawCircle(350, 330, 320);
     circle.graphics.endStroke();
     stage.addChild(circle);
-    for (var i = 0; i < vm.numEggs(); i++) {
-        var eggIndex = Math.floor(Math.random() * eggList.length);
-        var egg = new createjs.Bitmap(queue.getResult(eggList[eggIndex]));
-        egg.x = Math.random() * slideLength;
-        egg.y = Math.random() * slideWidth;
-        egg.identifier = egg.x.toString() + '-' + egg.y.toString();
-        while (egg.x < 200 || egg.y < 200) {
-            egg.x = Math.random() * slideLength;
-            egg.y = Math.random() * slideWidth;
-        } 
-        // egg.scaleX = 0.3;
-        // egg.scaleY = 0.3;
-        egg.scaleX = 0.3 * 1/2.1;
-        egg.scaleY = 0.3 * 1/2.1;
-        //egg.alpha = 0.75;
-        egg.eggType = eggList[eggIndex];
-        egg.addEventListener('click', function(e) { imageClickHandler(e); });
-        egg.rotation = Math.random() * 360;
-        egg.objType = 'egg';
-        egg.infoId = eggInfoId[eggIndex];
-        eggs.push(egg);
-    }
-    for (var i = 0; i < 50; i++) {
-        var idx = Math.floor(Math.random() * eggList.length);
-        var item = new createjs.Bitmap(queue.getResult(eggLikes[idx]));
-        item.x = Math.random() * slideLength;
-        item.y = Math.random() * slideWidth;
-        //egg.alpha = 0.75;
-        item.scaleX = 0.5;
-        item.scaleY = 0.5;
-        item.addEventListener('click', function(e) { imageClickHandler(e); });
-        item.rotation = Math.random() * 360;
-        item.objType = 'artifact';
-        item.identifier = item.x.toString() + '-' + item.y.toString();
-        artifacts.push(item);
-    }
-
-    for (var i = 0; i < 500; i++) {
-        var idx = Math.floor(Math.random() * bgDebris.length);
-        d = new createjs.Bitmap(queue.getResult(bgDebris[idx]));
-        d.x = Math.random() * slideLength;
-        d.y = Math.random() * slideWidth;
-        while (d.x < 100 || d.y < 100) {
-            d.x = Math.random() * slideLength;
-            d.y = Math.random() * slideWidth;
-        } 
-        d.oriX = d.x;
-        d.oriY = d.y;
-        d.scaleX = d.scaleY = Math.random() + 0.2;
-        d.scaleX = d.scaleY *= 1/2.3;
-        d.rotation = Math.random() * 360;
-        d.objType = 'artifact';
-        artifacts.push(d);
-    }
-    var stageBubbles = [];
-    for (var i = 0; i < 300; i++) {
-        var idx = Math.floor(Math.random() * bubbles.length);
-        d = new createjs.Bitmap(queue.getResult(bubbles[idx]));
-        d.x = Math.random() * slideLength;
-        d.y = Math.random() * slideWidth;
-        // d.scaleX = d.scaleY = Math.random();
-        d.scaleX = d.scaleY *= 1/2.3;
-        d.rotation = Math.random() * 360;
-        d.objType = 'artifact';
-        stageBubbles.push(d);
-    }
-    for (var i = 0; i < 500; i++) {
-        var idx = Math.floor(Math.random() * droplets.length);
-        d = new createjs.Bitmap(queue.getResult(droplets[idx]));
-        d.alpha = Math.random();
-        if(d.alpha<0.7) {
-          d.alpha += 0.3;
+    $.each(parasite_list, function(_, p) {
+        for (var i = 0; i < p['number']; i++) {
+            var pix = Math.floor(Math.random() * p['images'].length);
+            var image = new createjs.Bitmap(queue.getResult(p['images'][pix]));
+            image.x = Math.random() * slideLength;
+            image.y = Math.random() * slideWidth;
+            image.identifier = image.x.toString() + '-' + image.y.toString();
+            while (image.x < 200 || image.y < 200) {
+                image.x = Math.random() * slideLength;
+                image.y = Math.random() * slideWidth;
+            }
+            // egg.scaleX = 0.3;
+            // egg.scaleY = 0.3;
+            image.scaleX = 0.3 * 1/2.1;
+            image.scaleY = 0.3 * 1/2.1;
+            //egg.alpha = 0.75;
+            // image.eggType = eggList[eggIndex];
+            image.addEventListener('click', function(e) { imageClickHandler(e); });
+            image.rotation = Math.random() * 360;
+            image.objType = 'egg';
+            // image.infoId = eggInfoId[eggIndex];
+            eggs.push(image);
         }
-        d.x = Math.random() * slideLength;
-        d.y = Math.random() * slideWidth;
-        d.scaleX = d.scaleY = Math.random() * 1.5;
-        d.scaleX = d.scaleY *= 1/2.3;
-        d.rotation = Math.random() * 360;
-        d.objType = 'artifact';
-        artifacts.push(d);
-    }
-    for (var i = 0; i < 300; i++) {
-        var idx = Math.floor(Math.random() * debris.length);
-        d = new createjs.Bitmap(queue.getResult(debris[idx]));
-        // d.alpha = Math.random();
-        d.x = Math.random() * slideLength;
-        d.y = Math.random() * slideWidth;
-        while (d.x < 100 || d.y < 100) {
-            d.x = Math.random() * slideLength;
-            d.y = Math.random() * slideWidth;
-        } 
-        d.oriX = d.x;
-        d.oriY = d.y;
-        d.scaleX = d.scaleY = Math.random() + 0.2;
-        d.scaleX = d.scaleY *= 1/2.3;
-        d.rotation = Math.random() * 360;
-        d.objType = 'artifact';
-        artifacts.push(d);
-    }
-    for (var i=0; i < numBact; i++) {
-        var bacts = ['bact1', 'bact2', 'bact3', 'bact4'];
-        var idx = Math.floor(Math.random() * bacts.length);
-        var d = new createjs.Bitmap(queue.getResult(bacts[idx]));
-        d.scaleX = 0.25;
-        d.scaleY = 0.25;
-        d.scaleX = d.scaleY *= 1/2.3;
-        d.alpha = Math.random();
-        d.rotation = Math.random() * 360;
-        d.x = Math.random() * 700;
-        d.y = Math.random() * 700;
-        dusts.push(d);
-    }
-    for (var i=0; i < 30; i++) {
-        var bacts = ['bact5', 'bact6'];
-        var idx = Math.floor(Math.random() * bacts.length);
-        var d = new createjs.Bitmap(queue.getResult(bacts[idx]));
-        d.scaleX = d.scaleY = Math.random() * 1.3;
-        d.scaleX = d.scaleY *= 1/2.3;
-        d.alpha = Math.random();
-        d.rotation = Math.random() * 360;
-        d.x = Math.random() * 700;
-        d.y = Math.random() * 700;
-        dusts.push(d);
-    }
+    });
+
+    $.each(artifact_list, function(_, a) {
+        if (!a.oscillate) {
+            for (var i = 0; i < a.number; i++) {
+                var idx = Math.floor(Math.random() * a.images.length);
+                var image = new createjs.Bitmap(queue.getResult(a.images[idx]));
+                image.x = Math.random() * slideLength;
+                image.y = Math.random() * slideWidth;
+                while (image.x < 100 || image.y < 100) {
+                    image.x = Math.random() * slideLength;
+                    image.y = Math.random() * slideWidth;
+                }
+                image.oriX = image.x;
+                image.oriY = image.y;
+                image.scaleX = image.scaleY = Math.random() + 0.4;
+                image.scaleX = image.scaleY *= 1/2.3;
+                image.rotation = Math.random() * 360;
+                image.objType = 'artifact';
+                artifacts.push(image);
+            }
+        }
+        if (a.oscillate) {
+            for (var i=0; i < a.number; i++) {
+                var idx = Math.floor(Math.random() * a.images.length);
+                var d = new createjs.Bitmap(queue.getResult(a.images[idx]));
+                d.scaleX = 0.35;
+                d.scaleY = 0.35;
+                d.scaleX = d.scaleY *= 1/2.3;
+                d.alpha = Math.random();
+                d.rotation = Math.random() * 360;
+                d.x = Math.random() * 700;
+                d.y = Math.random() * 700;
+                dusts.push(d);
+            }
+        }
+    });
     for (var i=0; i<dusts.length; i++) {
         stage.addChild(dusts[i]);
     }
@@ -328,6 +280,7 @@ function draw() {
         }
     }
     // floating debris on the topmost layer
+    /*
     for (var i = 0; i < 50; i++) {
         var idx = Math.floor(Math.random() * floatingDebris.length);
         d = new createjs.Bitmap(queue.getResult(floatingDebris[idx]));
@@ -339,15 +292,13 @@ function draw() {
         d.objType = 'artifact';
         stageTemp.push(d);
     }
+    */
     for (var i=0; i<stageTemp.length; i++) {
         stage.addChild(stageTemp[i]);
     }
     stage.addChild(centerHashMark, leftHashMark, rightHashMark,
                     upperHashMark, lowerHashMark);
     stage.addChild(coordTextX, coordTextY, timeText);
-    for(var idx=0; idx < stageBubbles.lenght; idx++) {
-        stage.addChild(stageBubbles[idx]);
-    }
     stage.update();
     // set tick here so it starts after preload is complete.
     createjs.Ticker.addEventListener("tick", tick);
@@ -385,7 +336,6 @@ function zoomIn() {
 
 function zoomOut() {
   vm.isZoomed(false);
-  console.log('zooming out..');
   var deltaX = centerXZoom - centerX;
   var deltaY = centerYZoom - centerY;
   for(var i=0; i<stageTemp.length; i++) {
@@ -488,13 +438,13 @@ function moveEgg(direction, step) {
 function oscillate() {
     var signs;
     if (elaptime > 3000) {
-        signs = [-0.5, 0.5];
-    } else if (elaptime > 2000) {
-        signs = [-2, 2];
-    } else if (elaptime > 1000) {
-        signs = [-4, 2];
+        signs = [-1.5, 0.5];
+    } else if (elaptime > 4000) {
+        signs = [-2, 1];
+    } else if (elaptime > 8000) {
+        signs = [-3, 1.5];
     } else {
-        signs = [-8, 2];
+        signs = [-4, 1.8];
     }
     elaptime = elaptime + 1;
     for (var i=0; i<dusts.length; i++) {

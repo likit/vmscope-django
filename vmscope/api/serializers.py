@@ -1,39 +1,53 @@
 from rest_framework import serializers
 
 from microscope.models import (MicroscopeSection, ParasiteComponent,
-                                ArtifactComponent, ParasiteImage,
-                               ParasiteItem, ArtifactItem)
+                               ArtifactComponent, ParasiteImage,
+                               Parasite, Artifact, ParasiteComponent)
 
 
 class ParasiteImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = ParasiteImage
-        fields = ('image',)
+        fields = ('pk', 'image')
 
 
 class ArtifactImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = ParasiteImage
-        fields = ('image',)
+        fields = ('pk', 'image')
 
 
-class ArtifactItemSerializer(serializers.ModelSerializer):
-    item = ArtifactImageSerializer(read_only=True)
+class ParasiteSerializer(serializers.ModelSerializer):
+    images = ParasiteImageSerializer(many=True, read_only=True)
     class Meta:
-        model = ArtifactItem
-        fields = ('pk', 'item')
+        model = Parasite
+        fields = ('pk', 'genus', 'species', 'images')
 
 
-class ParasiteItemSerializer(serializers.ModelSerializer):
-    item = ArtifactImageSerializer(read_only=True)
+class ArtifactSerializer(serializers.ModelSerializer):
+    images = ArtifactImageSerializer(many=True, read_only=True)
     class Meta:
-        model = ParasiteItem
-        fields = ('pk', 'item')
+        model = Artifact
+        fields = ('pk', 'group', 'images')
+
+
+class ParasiteComponentSerializer(serializers.ModelSerializer):
+    parasite = ParasiteSerializer(many=False, read_only=True)
+    class Meta:
+        model = ParasiteComponent
+        fields = ('pk', 'number', 'parasite')
+
+
+class ArtifactComponentSerializer(serializers.ModelSerializer):
+    artifact = ArtifactSerializer(many=False, read_only=True)
+    class Meta:
+        model = ArtifactComponent
+        fields = ('pk', 'number', 'artifact', 'oscillate')
 
 
 class MicroscopeSectionSerializer(serializers.ModelSerializer):
-    parasites = ParasiteItemSerializer(many=True, read_only=True)
-    artifacts = ArtifactItemSerializer(many=True, read_only=True)
+    parasite_components = ParasiteComponentSerializer(many=True, read_only=False)
+    artifact_components = ArtifactComponentSerializer(many=True, read_only=False)
     class Meta:
         model = MicroscopeSection
-        fields = ('name', 'desc', 'parasites', 'artifacts')
+        fields = ('pk', 'name', 'desc', 'parasite_components', 'artifact_components')

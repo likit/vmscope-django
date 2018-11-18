@@ -36,7 +36,7 @@ class ArtifactImage(models.Model):
 
     def image_name(self, filename):
         extension = os.path.splitext(filename)[-1]
-        return '{}/{}'.format(self.artifact.group.name,
+        return '{}/{}{}'.format(self.artifact.group.name,
                    timezone.now().strftime('%Y%m%d_%H%M%S'), extension)
 
     image = models.ImageField(max_length=200,
@@ -109,49 +109,24 @@ class MicroscopeSection(models.Model):
 
 
 class ParasiteComponent(models.Model):
-    section = models.ForeignKey(MicroscopeSection, related_name='parasite_comps',
+    section = models.ForeignKey(MicroscopeSection, related_name='parasite_components',
                                 on_delete=models.CASCADE)
     parasite = models.ForeignKey(Parasite, on_delete=models.CASCADE)
     stage = models.ForeignKey(ParasiteStage, on_delete=models.CASCADE)
     number = models.IntegerField(default=1)
 
-    def save(self, *args, **kwargs):
-        parasite_ = set(self.parasite.images.all())
-        stage_ = set(self.stage.images.all())
-        parasites = list(parasite_.intersection(stage_))
-        for i in range(self.number):
-            img = random.choice(parasites)
-            new_item = ParasiteItem(section=self.section, item=img)
-            new_item.save()
-        super(ParasiteComponent, self).save(*args, **kwargs)
+    def __str__(self):
+        return 'Section ID={} ({}): {} of {}, {}'.format(self.section.pk,
+                         self.section, self.number, self.parasite, self.stage)
 
 
 class ArtifactComponent(models.Model):
-    section = models.ForeignKey(MicroscopeSection, related_name='artifact_comps',
+    section = models.ForeignKey(MicroscopeSection, related_name='artifact_components',
                                 on_delete=models.CASCADE)
     artifact = models.ForeignKey(Artifact, on_delete=models.CASCADE)
     number = models.IntegerField(default=1)
-    def save(self, *args, **kwargs):
-        artifacts = self.artifact.images.all()
-        for i in range(self.number):
-            img = random.choice(artifacts)
-            new_item = ArtifactItem(section=self.section,
-                                    item=img)
-            new_item.save()
-        super(ArtifactComponent, self).save(*args, **kwargs)
-
-
-class ParasiteItem(models.Model):
-    section = models.ForeignKey(MicroscopeSection, related_name='parasites',
-                                on_delete=models.CASCADE)
-    item = models.ForeignKey(ParasiteImage, on_delete=models.CASCADE)
-
-
-class ArtifactItem(models.Model):
-    section = models.ForeignKey(MicroscopeSection, related_name='artifacts',
-                                on_delete=models.CASCADE)
-    item = models.ForeignKey(ArtifactImage, on_delete=models.CASCADE)
-
+    oscillate = models.BooleanField(default=False)
 
     def __str__(self):
-        return '{} {} {}'.format(self.number, self.item.parasite, self.item.stage)
+        return 'Section ID={} ({}): {} of {}'.format(self.section.pk, self.section,
+                                                     self.artifact, self.number)
