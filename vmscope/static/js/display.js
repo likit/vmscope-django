@@ -47,16 +47,13 @@ var artifacts = [];
 var stageTemp = [];
 var numBact = 500;
 var eggInfoId = [1,1,1,1,5,3,3,3,3,7,7,7,7,4,4,4,6,6,6,6];
-var eggList = ['ascaris1', 'ascaris2', 'ascaris3', 'ascaris6', 'ascaris5',
-                'taenia1', 'taenia1', 'taenia1', 'taenia1', 'hookworm1', 'hookworm2',
-                'hookworm1', 'hookworm2', 'ov1', 'ov2', 'ov3', 'TT1', 'TT1', 'TT1', 'TT1'];
-var bubbles = ['bubble1', 'bubble2', 'bubble3', 'bubble4', 'bubble5'];
-var bgDebris = ['artifact2', 'artifact3', 'artifact18', 'artifact19'];
-var droplets = ['artifact5', 'artifact6', 'artifact7', 'bubble5'];
-var eggLikes = ['pollen1', 'pollen2', 'artifact15'];
-var debris = ['artifact4', 'artifact8', 'artifact9',
-                        'artifact10', 'artifact11', 'artifact12'];
-var floatingDebris = ['float1', 'float2', 'float3', 'float4'];
+var eggList = [];
+var bubbles = [];
+var bgDebris = [];
+var droplets = [];
+var eggLikes = [];
+var debris = [];
+var floatingDebris = [];
 
 
 var stage,
@@ -109,53 +106,21 @@ function onDPad(e) {
 function preload() {
     queue = new createjs.LoadQueue();
     queue.addEventListener("complete", draw);
-    queue.loadManifest([
-        {id: "TT1", src: '/static/images/parasites/eggs/TT001.png'},
-        {id: "ascaris1", src: '/static/images/parasites/eggs/ascaris001.png'},
-        {id: "ascaris2", src: '/static/images/parasites/eggs/ascaris002.png'},
-        {id: "ascaris3", src: '/static/images/parasites/eggs/ascaris003.png'},
-        {id: "ascaris5", src: '/static/images/parasites/eggs/ascaris005.png'},
-        {id: "ascaris6", src: '/static/images/parasites/eggs/ascaris006.png'},
-        {id: "taenia1", src: '/static/images/parasites/eggs/taenia003.png'},
-        {id: "taenia2", src: '/static/images/parasites/eggs/taenia002.png'},
-        {id: "ov1", src: '/static/images/parasites/eggs/opisthorchis002.png'},
-        {id: "ov2", src: '/static/images/parasites/eggs/opisthorchis004.png'},
-        {id: "ov3", src: '/static/images/parasites/eggs/opisthorchis005.png'},
-        {id: "hookworm1", src: '/static/images/parasites/eggs/hookworm001.png'},
-        {id: "hookworm2", src: '/static/images/parasites/eggs/hookworm002.png'},
-        {id: "bact1", src: '/static/images/parasites/bac14.png'},
-        {id: "bact2", src: '/static/images/parasites/bac10.png'},
-        {id: "bact3", src: '/static/images/parasites/bac9.png'},
-        {id: "bact4", src: '/static/images/parasites/bac2.png'},
-        {id: "bact5", src: '/static/images/parasites/d16.png'},
-        {id: "bact6", src: '/static/images/parasites/d17.png'},
-        {id: "artifact2", src: '/static/images/parasites/d3.png'},
-        {id: "artifact3", src: '/static/images/parasites/d5.png'},
-        {id: "artifact4", src: '/static/images/parasites/dfloat15.png'},
-        {id: "artifact5", src: '/static/images/parasites/d16.png'},
-        {id: "artifact6", src: '/static/images/parasites/d17.png'},
-        {id: "artifact7", src: '/static/images/parasites/d19.png'},
-        {id: "artifact8", src: '/static/images/parasites/dfloat11.png'},
-        {id: "artifact9", src: '/static/images/parasites/dfloat12.png'},
-        {id: "artifact10", src: '/static/images/parasites/dfloat13.png'},
-        {id: "artifact11", src: '/static/images/parasites/dfloat14.png'},
-        {id: "artifact12", src: '/static/images/parasites/dfloat15.png'},
-        {id: "artifact15", src: '/static/images/parasites/plant.spine1.png'},
-        {id: "pollen1", src: '/static/images/parasites/pollen1.png'},
-        {id: "pollen2", src: '/static/images/parasites/artifacts/artifact001.png'},
-        {id: "pollen3", src: '/static/images/parasites/artifacts/fiber1.png'},
-        {id: "artifact18", src: '/static/images/parasites/d21.png'},
-        {id: "artifact19", src: '/static/images/parasites/d23.png'},
-        {id: "bubble1", src: '/static/images/parasites/bubble1.png'},
-        {id: "bubble2", src: '/static/images/parasites/bubble2.png'},
-        {id: "bubble3", src: '/static/images/parasites/bubble3.png'},
-        {id: "bubble4", src: '/static/images/parasites/bubble4.png'},
-        {id: "bubble5", src: '/static/images/parasites/bubble5.png'},
-        {id: "float1", src: '/static/images/parasites/float001.png'},
-        {id: "float2", src: '/static/images/parasites/float002.png'},
-        {id: "float3", src: '/static/images/parasites/float003.png'},
-        {id: "float4", src: '/static/images/parasites/float004.png'},
-    ]);
+    var items = [];
+
+    $.when($.getJSON('/api/microscope/1').then(function(data) {
+        $.each(data['parasites'], function(idx,d) {
+            console.log(d)
+            items.push({
+                id: d['pk'],
+                src: d['item']['image']
+            });
+            eggList.push(d['pk']);
+        });
+        queue.loadManifest(items);
+        console.log(items, eggList);
+        })
+    );
 }
 
 function run() {

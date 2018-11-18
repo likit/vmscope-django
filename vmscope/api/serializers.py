@@ -21,14 +21,14 @@ class ArtifactItemSerializer(serializers.ModelSerializer):
     item = ArtifactImageSerializer(read_only=True)
     class Meta:
         model = ArtifactItem
-        fields = ('item',)
+        fields = ('pk', 'item')
 
 
 class ParasiteItemSerializer(serializers.ModelSerializer):
     item = ArtifactImageSerializer(read_only=True)
     class Meta:
         model = ParasiteItem
-        fields = ('item',)
+        fields = ('pk', 'item')
 
 
 class MicroscopeSectionSerializer(serializers.ModelSerializer):
