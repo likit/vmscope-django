@@ -1,25 +1,101 @@
+{% extends 'base.html' %}
 {% load static %}
-{% include 'base.html' %}
 
+{% block head %}
+<style>
+    .noborder td, .noborder th {
+        border: none !important;
+    }
+    body {
+        background-color: black;
+    }
+</style>
+{% endblock %}
 {% block page_content %}
-<section class="section">
-    <h1 class="title">
+<section class="section" style="background-color: black">
+    <h1 class="title has-text-primary">
         <span class="icon">
             <i class="fas fa-microscope"></i>
         </span>&nbsp;
-        Virtual Microscope</h1>
-    <div class="panel">
-        <div class="panel-heading">
-            <h3>Section: {{ scope.name }}</h3>
+        Virtual Microscope
+    </h1>
+    <div class="columns" style="background-color: black;"> <!-- instruction/information panel -->
+        <div class="column box is-3" style="background-color: gray">
+            <div class="panel">
+                <div class="panel-heading">
+                    {{ scope.name }}
+                </div>
+                <div class="panel-block has-text-light">
+                    {{ scope.desc }}
+                </div>
+            </div>
+            <div class="panel">
+                <div class="panel-block">
+                    <span class="icon is-large">
+                        <i class="fas fa-sign-out-alt fa-2x has-text-light"></i>
+                    </span>&nbsp;
+                    <span class="has-text-light">Quit</span>
+                </div>
+            </div>
         </div>
-        <div class="panel-block">
-            <p>{{ scope.desc }}</p>
+        <div class="column is-6 has-text-centered"
+            style="background-color: black"> <!-- microscope -->
+           <canvas width="700" height="650" id="canvas"
+                   style="background: black; border: black solid 5px">
+           </canvas>
         </div>
-    </div>
-    <div class="box">
-        <canvas width="700" height="650" id="canvas"
-                style="background: black; border: black solid 1px">
-        </canvas>
+        <div class="column is-2 box" style="background-color: black;"> <!-- control panel -->
+            <div class="columns">
+                <div class="column">
+                    <table class="table noborder" style="background: black">
+                        <tr border="0">
+                            <td></td>
+                            <td>
+                                <span class="icon is-large">
+                                    <i class="far fa-arrow-alt-circle-up fa-4x has-text-info"
+                                       data-bind="click: function(data, event) { moveEgg('up', 20); }"></i>
+                                </span>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr border="0">
+                            <td>
+                                <span class="icon is-large">
+                                    <i class="far fa-arrow-alt-circle-left fa-4x has-text-info"
+                                       data-bind="click: function(data, event) { moveEgg('left', 20); }"></i>
+                                </span>
+                            </td>
+                            <td>
+                                <span class="icon is-large" data-bind="visible: !isZoomed()">
+                                    <i class="fas fa-plus-circle fa-3x has-text-info"
+                                        data-bind="click: zoom"></i>
+                                </span>
+                                <span class="icon is-large" data-bind="visible: isZoomed()">
+                                    <i class="fas fa-minus-circle fa-3x has-text-info"
+                                       data-bind="click: zoom"></i>
+                                </span>
+                            </td>
+                            <td>
+                                <span class="icon is-large">
+                                    <i class="far fa-arrow-alt-circle-right fa-4x has-text-info"
+                                       data-bind="click: function(data, event) { moveEgg('right', 20); }"></i>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr border="0">
+                            <td></td>
+                            <td>
+                                <span class="icon is-large">
+                                    <i class="far fa-arrow-alt-circle-down fa-4x has-text-info"
+                                       data-bind="click: function(data, event) { moveEgg('down', 20); }"></i>
+                                </span>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 {% endblock %}
@@ -28,5 +104,5 @@
 <script type="text/javascript" src="{% static 'js/vendors/knockout.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/vendors/createjs.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/display.js' %}"></script>
-{% endblock %}}
+{% endblock %}
 
