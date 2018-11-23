@@ -240,7 +240,7 @@ function draw() {
                 image.oriX = image.x;
                 image.oriY = image.y;
                 image.scaleX = image.scaleY = Math.random() + 0.4;
-                image.scaleX = image.scaleY *= 1/2.3;
+                image.scaleX = image.scaleY *= 1/1.8;
                 image.rotation = Math.random() * 360;
                 image.objType = 'artifact';
                 artifacts.push(image);
