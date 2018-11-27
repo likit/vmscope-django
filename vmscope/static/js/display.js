@@ -121,7 +121,6 @@ function preload() {
                 images: images
             });
         });
-        console.log(items)
         $.each(data['artifact_components'], function(_,cmp) {
             var item = cmp['artifact'];
             var images = [];
@@ -201,7 +200,8 @@ function draw() {
 
     circle.graphics.setStrokeStyle(6);
     circle.graphics.beginStroke('#ffffff');
-    circle.graphics.beginFill(createjs.Graphics.getRGB(220, 220, 188, 1));
+    // circle.graphics.beginFill(createjs.Graphics.getRGB(220, 220, 188, 1));
+    circle.graphics.beginFill(createjs.Graphics.getRGB(229, 228, 213, 1));
     circle.graphics.drawCircle(350, 330, 320);
     circle.graphics.endStroke();
     stage.addChild(circle);
