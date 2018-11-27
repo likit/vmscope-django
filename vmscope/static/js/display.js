@@ -103,35 +103,39 @@ function preload() {
     queue.addEventListener("complete", draw);
     var items = [];
 
-    $.when($.getJSON('/api/microscope/1')).then(function(data) {
+    $.when($.getJSON('/api/microscope/'+scopeId)).then(function(data) {
         $.each(data['parasite_components'], function(_,cmp) {
             var item = cmp['parasite'];
             var images = [];
             $.each(item['images'], function(_, d){
                 items.push({
-                    id: d['pk'],
+                    id: 'par-'+d['pk'],
                     src: d['image']
                 });
-                images.push(d['pk']);
+                images.push('par-'+d['pk']);
             });
             parasite_list.push({
                 number: cmp['number'],
+                genus: cmp['parasite']['genus'],
+                species: cmp['parasite']['species'],
                 images: images
             });
         });
+        console.log(items)
         $.each(data['artifact_components'], function(_,cmp) {
             var item = cmp['artifact'];
             var images = [];
             $.each(item['images'], function(_, d) {
                 items.push({
-                    id: d['pk'],
+                    id: 'ar-'+d['pk'],
                     src: d['image']
                 });
-                images.push(d['pk']);
+                images.push('ar-'+d['pk']);
             });
             artifact_list.push({
                 number: cmp['number'],
                 oscillate: cmp.oscillate,
+                resizable: cmp.resizable,
                 images: images
             });
         });
@@ -214,8 +218,8 @@ function draw() {
             }
             // egg.scaleX = 0.3;
             // egg.scaleY = 0.3;
-            image.scaleX = 0.3 * 1/2.1;
-            image.scaleY = 0.3 * 1/2.1;
+            image.scaleX = 0.3 * 1/1.6;
+            image.scaleY = 0.3 * 1/1.6;
             //egg.alpha = 0.75;
             // image.eggType = eggList[eggIndex];
             image.addEventListener('click', function(e) { imageClickHandler(e); });
@@ -239,8 +243,10 @@ function draw() {
                 }
                 image.oriX = image.x;
                 image.oriY = image.y;
-                image.scaleX = image.scaleY = Math.random() + 0.4;
-                image.scaleX = image.scaleY *= 1/1.8;
+                image.scaleX = image.scaleY *= 1/2.3;
+                if (a.resizable) {
+                    image.scaleX = image.scaleY = Math.random() + 0.4;
+                }
                 image.rotation = Math.random() * 360;
                 image.objType = 'artifact';
                 artifacts.push(image);

@@ -142,6 +142,9 @@
 </section>
 {% endblock %}
 {% block scripts %}
+<script type="text/javascript">
+    var scopeId = {{scope.pk}};
+</script>
 <script type="text/javascript" src="{% static 'js/vendors/jquery.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/vendors/knockout.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/vendors/createjs.min.js' %}"></script>

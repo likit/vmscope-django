@@ -42,7 +42,7 @@ class ArtifactComponentSerializer(serializers.ModelSerializer):
     artifact = ArtifactSerializer(many=False, read_only=True)
     class Meta:
         model = ArtifactComponent
-        fields = ('pk', 'number', 'artifact', 'oscillate')
+        fields = ('pk', 'number', 'artifact', 'oscillate', 'resizable')
 
 
 class MicroscopeSectionSerializer(serializers.ModelSerializer):
