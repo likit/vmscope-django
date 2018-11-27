@@ -127,6 +127,7 @@ class ArtifactComponent(models.Model):
     number = models.IntegerField(default=1)
     oscillate = models.BooleanField(default=False)
     resizable = models.BooleanField(default=False)
+    floating = models.BooleanField(default=False)
 
     def __str__(self):
         return 'Section ID={} ({}): {} of {}'.format(self.section.pk, self.section,

@@ -43,10 +43,10 @@ var slideLength = 4600;
 var elaptime = 0;
 var eggs = [];
 var dusts = [];
+var floatings = [];
 var artifacts = [];
 var stageTemp = [];
 var eggInfoId = [1,1,1,1,5,3,3,3,3,7,7,7,7,4,4,4,6,6,6,6];
-var floatingDebris = [];
 var parasite_list = [];
 var artifact_list = [];
 
@@ -231,7 +231,7 @@ function draw() {
     });
 
     $.each(artifact_list, function(_, a) {
-        if (!a.oscillate) {
+        if (!a.oscillate && !a.floating) {
             for (var i = 0; i < a.number; i++) {
                 var idx = Math.floor(Math.random() * a.images.length);
                 var image = new createjs.Bitmap(queue.getResult(a.images[idx]));
@@ -266,6 +266,20 @@ function draw() {
                 dusts.push(d);
             }
         }
+        if (a.floating) {
+            for (var i=0; i < a.number; i++) {
+                var idx = Math.floor(Math.random() * a.images.length);
+                var d = new createjs.Bitmap(queue.getResult(a.images[idx]));
+                d.scaleX = 0.35;
+                d.scaleY = 0.35;
+                d.scaleX = d.scaleY *= 1/2.3;
+                d.alpha = Math.random();
+                d.rotation = Math.random() * 360;
+                d.x = Math.random() * 700;
+                d.y = Math.random() * 700;
+                floatings.push(d);
+            }
+        }
     });
     for (var i=0; i<dusts.length; i++) {
         stage.addChild(dusts[i]);
@@ -286,19 +300,9 @@ function draw() {
         }
     }
     // floating debris on the topmost layer
-    /*
-    for (var i = 0; i < 50; i++) {
-        var idx = Math.floor(Math.random() * floatingDebris.length);
-        d = new createjs.Bitmap(queue.getResult(floatingDebris[idx]));
-        d.x = Math.random() * slideLength;
-        d.y = Math.random() * slideWidth;
-        d.scaleX = d.scaleY = Math.random() + 0.2;
-        d.scaleX = d.scaleY *= 1/2.3;
-        d.rotation = Math.random() * 360;
-        d.objType = 'artifact';
-        stageTemp.push(d);
+    for (var i=0; i<floatings.length; i++) {
+        stageTemp.push(floatings[i]);
     }
-    */
     for (var i=0; i<stageTemp.length; i++) {
         stage.addChild(stageTemp[i]);
     }
