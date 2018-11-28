@@ -174,7 +174,7 @@ function draw() {
     lowerHashMark = new createjs.Shape();
 
     centerHashMark.graphics.beginStroke('#000');
-    centerHashMark.graphics.drawRect(360,305,0,50);
+    centerHashMark.graphics.drawRect(350,315,0,20);
     centerHashMark.graphics.endStroke();
     centerHashMark.alpha = 0.5;
     
@@ -194,7 +194,7 @@ function draw() {
     lowerHashMark.alpha = 0.2;
     
     upperHashMark.graphics.beginStroke('#000');
-    upperHashMark.graphics.drawRect(330,30,50,0);
+    upperHashMark.graphics.drawRect(340,325,20,0);
     upperHashMark.graphics.endStroke();
     upperHashMark.alpha = 0.2;
 
@@ -291,6 +291,7 @@ function draw() {
     for (var i=0; i<artifacts.length; i++) {
         stageTemp.push(artifacts[i]);
     }
+    /*
     for (var i=0; i<100; i++) {
         var idx = Math.floor(Math.random() * stageTemp.length);
         if (idx + 5 < stageTemp.length) {
@@ -299,6 +300,7 @@ function draw() {
             stageTemp[idx] = tempItem;
         }
     }
+    */
     // floating debris on the topmost layer
     for (var i=0; i<floatings.length; i++) {
         stageTemp.push(floatings[i]);
@@ -306,8 +308,10 @@ function draw() {
     for (var i=0; i<stageTemp.length; i++) {
         stage.addChild(stageTemp[i]);
     }
+    /*
     stage.addChild(centerHashMark, leftHashMark, rightHashMark,
                     upperHashMark, lowerHashMark);
+    */
     stage.addChild(coordTextX, coordTextY, timeText);
     stage.update();
     // set tick here so it starts after preload is complete.
