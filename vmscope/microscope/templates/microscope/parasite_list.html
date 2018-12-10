@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block page_content %}
+<section class="section">
+    <div class="columns">
+        <div class="column">
+            {% for parasite in parasites %}
+                <span>{{parasite.genus}} {{parasite.species}}</span>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
