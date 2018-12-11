@@ -482,6 +482,9 @@ function oscillate() {
 function tick() {
     oscillate();
     var et =  elaptime/30;
+    if (et >= 3000) {
+        $('#finishLink')[0].click();
+    }
     timeText.text = 'Time='+et.toFixed(0)+' sec';
     stage.update();
 }
