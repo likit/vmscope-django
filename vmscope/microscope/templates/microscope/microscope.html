@@ -37,10 +37,12 @@
             </div>
             <div class="panel">
                 <div class="panel-block">
-                    <span class="icon is-large">
-                        <i class="far fa-check-circle fa-2x has-text-light"></i>
-                    </span>&nbsp;
-                    <span class="has-text-light">Finished</span>
+                    <a href="{% url 'parasite_report' scope.id %}">
+                        <span class="icon is-large">
+                            <i class="far fa-check-circle fa-2x has-text-light"></i>
+                        </span>&nbsp;
+                        <span class="has-text-light">Finished</span>
+                    </a>
                 </div>
                 <div class="panel-block">
                     <span class="icon is-large">
@@ -55,7 +57,16 @@
                     <span class="has-text-light">Quit</span>
                 </div>
                 <div class="panel-block">
-                    <table class="table noborder is-fullwidth" style="background-color: black">
+                    <p><strong class="has-text-light">Keyboard Navigation</strong></p>
+                    <p class="has-text-light">
+                        Use arrow keys to navigate and Shift-Z to zoom in and out.
+                    </p>
+                </div>
+                <div class="panel-block">
+                    <table class="table noborder" style="background-color: black">
+                        <tr border="0">
+                            <td colspan="3"><strong class="has-text-light">Mouse Navigation</strong></td>
+                        </tr>
                         <tr border="0">
                             <td></td>
                             <td>
