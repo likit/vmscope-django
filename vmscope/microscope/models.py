@@ -2,6 +2,7 @@ import os
 import random
 from django.db import models
 from django.utils import timezone
+from wagtail.core.models import Page
 
 # Create your models here.
 class ArtifactType(models.Model):
@@ -132,3 +133,12 @@ class ArtifactComponent(models.Model):
     def __str__(self):
         return 'Section ID={} ({}): {} of {}'.format(self.section.pk, self.section,
                                                      self.artifact, self.number)
+
+
+class ParasitePage(models.Model):
+    parasite = models.ForeignKey(Parasite, related_name='parasite_pages',
+                                 on_delete=models.CASCADE)
+    page = models.ForeignKey(Page, related_name='parasite_pages',
+                             on_delete=models.CASCADE)
+    def __str__(self):
+        return '{} {}, page slug={}'.format(self.parasite.genus, self.parasite.species, self.page.slug)

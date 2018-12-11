@@ -27,6 +27,24 @@
                         {% endfor %}
                     </ul>
                 </div>
+                <div class="panel-heading">
+                    References
+                </div>
+                {% for pc in parasite_components %}
+                {% if pc.parasite.parasite_pages.all %}
+                <div class="panel-block">
+                    <ul>
+                        <h3 class="title is-size-6">
+                            <i>{{pc.parasite.genus}} {{pc.parasite.species}}</i>
+                        </h3>
+                        {% for item in pc.parasite.parasite_pages.all %}
+                        <li><a href="{{item.page.url}}">{{item.page.title}}</a></li>
+                        {% empty %}
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+                {% endfor %}
                 {% else %}
                 <form method="post">
                     {% csrf_token %}

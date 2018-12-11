@@ -14,19 +14,21 @@ def parasite_report(request, pk):
     incorrects = []
     scope_section = get_object_or_404(MicroscopeSection, pk=int(pk))
     parasites = Parasite.objects.all()
+    parasite_components = []
     if request.method == 'POST':
         answers = set(request.POST.getlist('answers'))
-        parasite_components = []
         for item in scope_section.parasite_components.all():
             if str(item.parasite.id) in answers:
                 corrects.append(str(item.parasite))
             else:
                 incorrects.append(str(item.parasite))
+            parasite_components.append(item)
     return render(request, 'microscope/parasite_report.html',
                   {'parasites': parasites,
                    'scope_section': scope_section,
                    'corrects': corrects,
                    'incorrects': incorrects,
+                   'parasite_components': parasite_components,
                    })
 
 
