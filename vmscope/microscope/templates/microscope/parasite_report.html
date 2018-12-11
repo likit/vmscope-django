@@ -31,12 +31,16 @@
                 <form method="post">
                     {% csrf_token %}
                     <div class="panel-block">
-                    {% for parasite in parasites %}
-                        <label class="checkbox">
-                            <input type="checkbox" value="{{parasite.id}}" name="answers">
-                            <i>{{parasite.genus}} {{parasite.species}}</i>
-                        </label>
-                    {% endfor %}
+                        <div class="control is-grouped">
+                        {% for parasite in parasites %}
+                            <p class="control">
+                                <label class="checkbox">
+                                    <input type="checkbox" value="{{parasite.id}}" name="answers">
+                                    <i>{{parasite.genus}} {{parasite.species}}</i>
+                                </label>
+                            </p>
+                        {% endfor %}
+                        </div>
                     </div>
                     <br>
                 <button type="submit" class="button is-primary is-rounded">Submit</button>
