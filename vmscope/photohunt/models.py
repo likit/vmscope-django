@@ -44,3 +44,17 @@ class Image(models.Model):
 
     def __str__(self):
         return '{}'.format(self.image.url)
+
+
+class ImageTagSet(models.Model):
+    image = models.ForeignKey(Image, related_name='tagsets',
+                                 on_delete=models.CASCADE)
+    description = models.TextField(blank=True, null=True)
+
+
+class ImageTag(models.Model):
+    tagset = models.ForeignKey(ImageTagSet, related_name='tags',
+                                 on_delete=models.CASCADE)
+    description = models.TextField(blank=True, null=True)
+    x = models.FloatField(blank=False, null=False)
+    y = models.FloatField(blank=False, null=False)
