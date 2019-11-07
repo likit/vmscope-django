@@ -4,19 +4,40 @@
 {% block head %}
 {% endblock %}
 {% block page_content %}
-<section class="section" style="background-color: black">
-    <h1 class="title has-text-primary">
+<section class="section">
+    <h1 class="title has-text-dark">
         <span class="icon">
-            <i class="fas fa-microscope"></i>
+            <i class="fas fa-images"></i>
         </span>&nbsp;
-        Virtual Microscope v.0.6
+        <span>Photo Hunt version 0.1</span>
     </h1>
+    <div class="columns">
+        <div class="column">
+            <canvas id="imageCanvas" width="800" height="800"></canvas>
+        </div>
+        <div class="column">
+            <span>Photo ID = {{ image.image.url }}</span>
+        </div>
+    </div>
 </section>
 {% endblock %}
 {% block scripts %}
-<script type="text/javascript" src="{% static 'js/vendors/jquery.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/vendors/knockout.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/vendors/createjs.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/display.js' %}"></script>
+<script>
+    var stage = new createjs.Stage("imageCanvas");
+    var bitmap = new createjs.Bitmap("{{ image.image.url }}");
+    bitmap.addEventListener("click", handleClick);
+    var text = new createjs.Text("", "20px Arial");
+    stage.addChild(bitmap);
+    stage.addChild(text);
+    stage.update();
+    function handleClick(event) {
+        console.log(event.localX, event.localY);
+        text.x = event.localX;
+        text.y = event.localY;
+        text.text = event.localX + ',' + event.localY;
+        stage.update();
+    }
+</script>
 {% endblock %}
 
