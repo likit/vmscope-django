@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+{% endblock %}
+{% block page_content %}
+<section class="section">
+    <h1 class="title has-text-dark">
+        <span class="icon">
+            <i class="fas fa-images"></i>
+        </span>&nbsp;
+        <span>Photo Hunt version 0.1</span>
+    </h1>
+    <table class="table">
+    {% for img in images %}
+        <tr>
+            <td>{{ img }}</td>
+            <td>
+                <a href="#"><img src="{{ img.image.url }}" width="300"/></td></a>
+        </tr>
+    {% endfor %}
+    </table>
+</section>
+{% endblock %}
+{% block scripts %}
+<script type="text/javascript" src="{% static 'js/vendors/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/vendors/knockout.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/vendors/createjs.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/display.js' %}"></script>
+{% endblock %}
+

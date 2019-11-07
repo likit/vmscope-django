@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+{% endblock %}
+{% block page_content %}
+<section class="section" style="background-color: black">
+    <h1 class="title has-text-primary">
+        <span class="icon">
+            <i class="fas fa-microscope"></i>
+        </span>&nbsp;
+        Virtual Microscope v.0.6
+    </h1>
+</section>
+{% endblock %}
+{% block scripts %}
+<script type="text/javascript" src="{% static 'js/vendors/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/vendors/knockout.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/vendors/createjs.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/display.js' %}"></script>
+{% endblock %}
+
