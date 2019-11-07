@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'taggit',
     'contents',
     'microscope.apps.MicroscopeConfig',
+    'photohunt.apps.PhotohuntConfig',
     'main.apps.MainConfig',
     'rest_framework',
     'api.apps.ApiConfig',
