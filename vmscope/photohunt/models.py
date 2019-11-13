@@ -20,7 +20,7 @@ class Parasite(models.Model):
 class Image(models.Model):
     parasite = models.ForeignKey(Parasite, related_name='images',
                                  on_delete=models.CASCADE)
-    description = models.TextField(blank=True, null=True)
+    description = models.TextField(blank=True, null=True, max_length=256)
     status = models.CharField(max_length=200, choices=(
         ('pending', 'pending'),
         ('approved', 'approved'),
@@ -47,14 +47,33 @@ class Image(models.Model):
 
 
 class ImageTagSet(models.Model):
-    image = models.ForeignKey(Image, related_name='tagsets',
-                                 on_delete=models.CASCADE)
-    description = models.TextField(blank=True, null=True)
+    image = models.ForeignKey(Image,
+                              related_name='tagsets',
+                              on_delete=models.CASCADE)
+    title = models.TextField(max_length=128)
+    description = models.TextField(blank=True, null=True, max_length=256)
+
+
+    def __str__(self):
+        return self.title
 
 
 class ImageTag(models.Model):
-    tagset = models.ForeignKey(ImageTagSet, related_name='tags',
-                                 on_delete=models.CASCADE)
+    tagset = models.ForeignKey(ImageTagSet,
+                               related_name='tags',
+                               on_delete=models.CASCADE)
     description = models.TextField(blank=True, null=True)
     x = models.FloatField(blank=False, null=False)
     y = models.FloatField(blank=False, null=False)
+    choices = models.TextField(blank=True, null=True)
+    question = models.TextField(blank=True, null=True, max_length=256)
+    answer = models.TextField(blank=True, null=True, max_length=256)
+
+
+class Question(models.Model):
+    tagset = models.ForeignKey(ImageTagSet,
+                               related_name='questions',
+                               on_delete=models.CASCADE)
+    choices = models.TextField(blank=True, null=True)
+    question = models.TextField(blank=True, null=True)
+    answer = models.TextField(blank=True, null=True)
