@@ -16,7 +16,7 @@
         <tr>
             <td>{{ img }}</td>
             <td>
-                <a href="#"><img src="{{ img.image.url }}" width="300"/></td></a>
+                <a href="{% url 'image_view' img.id %}"><img src="{{ img.image.url }}" width="300"/></td></a>
         </tr>
     {% endfor %}
     </table>
