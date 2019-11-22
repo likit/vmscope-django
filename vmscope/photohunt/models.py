@@ -71,13 +71,9 @@ class ImageTag(models.Model):
 
 
 class Question(models.Model):
-
-    '''
     tagset = models.ForeignKey(ImageTagSet,
                                related_name='questions',
                                on_delete=models.CASCADE)
-    '''
-    tagsets = models.ManyToManyField(ImageTagSet)
     choices = models.TextField(blank=True, null=True)
     question = models.TextField(blank=True, null=True)
     answer = models.TextField(blank=True, null=True)
