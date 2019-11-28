@@ -2,7 +2,12 @@ from django.contrib import admin
 from .models import *
 
 
-admin.site.register(Image)
+class ImageAdmin(admin.ModelAdmin):
+    list_display = ('parasite', 'image_dim', 'upload_by', 'upload_at', 'image_url')
+    readonly_fields = ('image_tag', 'image_dim')
+
+
+admin.site.register(Image, ImageAdmin)
 admin.site.register(Parasite)
 admin.site.register(ImageTagSet)
 admin.site.register(ImageTag)
