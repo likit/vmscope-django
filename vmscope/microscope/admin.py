@@ -1,8 +1,14 @@
 from django.contrib import admin
 from .models import *
 
+
+class ParasiteImageAdmin(admin.ModelAdmin):
+    list_display = ('parasite', 'image_dim', 'upload_by', 'upload_at')
+    readonly_fields = ('image_tag', 'image_dim')
+
+
 # Register your models here.
-admin.site.register(ParasiteImage)
+admin.site.register(ParasiteImage, ParasiteImageAdmin)
 admin.site.register(Parasite)
 admin.site.register(ParasiteStage)
 admin.site.register(ArtifactImage)

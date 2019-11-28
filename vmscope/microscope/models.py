@@ -2,6 +2,7 @@ import os
 import random
 from django.db import models
 from django.utils import timezone
+from django.utils.safestring import mark_safe
 from wagtail.core.models import Page
 
 # Create your models here.
@@ -94,6 +95,18 @@ class ParasiteImage(models.Model):
 
     image = models.ImageField(max_length=200,
                               upload_to=image_name)
+
+    def image_dim(self):
+        return '{}x{} pixels'.format(self.image.width, self.image.height)
+
+    image_dim.short_description = 'Size'
+
+
+    def image_tag(self):
+        from django.utils.html import escape
+        return mark_safe(u'<img src="%s" />' % escape(self.image.url))
+
+    image_tag.short_description = 'Image'
 
     def __str__(self):
         return '{}'.format(self.image.url)
