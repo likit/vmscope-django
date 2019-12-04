@@ -96,6 +96,6 @@ class Question(models.Model):
 
 
 class Session(models.Model):
-    questions = models.ManyToManyField(Question)
+    tagsets = models.ManyToManyField(ImageTagSet)
     desc = models.TextField(blank=True, null=True)
     title = models.TextField(blank=False, null=False)

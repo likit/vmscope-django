@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block page_content %}
+<section class="section">
+    <div class="container">
+        <h1 class="title">Welcome to The Photohunt Learning Platform</h1>
+        <div class="columns">
+            <div class="column">
+                <article class="panel is-info">
+                    <p class="panel-heading">
+                        Malaria
+                    </p>
+                    {% for session in sessions %}
+                    <a class="panel-block" href="{% url 'show_session' session.pk %}">
+                        {{ session.title }} ({{ session.tagsets.count }} ชุดคำถาม)
+                    </a>
+                    {% endfor %}
+                </article>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
