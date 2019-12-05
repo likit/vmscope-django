@@ -13,7 +13,7 @@
     <div class="container">
         <div class="columns">
             <div class="column">
-                <img src="{{ tagset.image.image.url }}"/>
+                <canvas id="imageCanvas" width="800" height="800"></canvas>
             </div>
             <div class="column">
                 <form method="post">
@@ -50,3 +50,22 @@
     </div>
 </section>
 {% endblock %}
+{% block scripts %}
+<script type="text/javascript" src="{% static 'js/vendors/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/vendors/createjs.min.js' %}"></script>
+<script type="text/javascript">
+    var tags = {{ all_tags|safe }};
+    var stage = new createjs.Stage("imageCanvas");
+    var bitmap = new createjs.Bitmap("{{ tagset.image.image.url }}");
+    stage.addChild(bitmap);
+    var t;
+    for (var i=0; i<tags.length; i++) {
+        t = new createjs.Text(tags[i].n.toString(), '20px Arial', '#017c1e');
+        t.x = tags[i].x;
+        t.y = tags[i].y;
+        stage.addChild(t);
+    }
+    stage.update();
+</script>
+{% endblock %}
+

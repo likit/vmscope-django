@@ -57,8 +57,14 @@ def show_tagset(request, session_pk, tsnum=0):
         tagset = tagsets[tsnum]
     except IndexError:
         pass
+    else:
+        all_tags = []
+        for n,tag in enumerate(tagset.tags.all(), start=1):
+            all_tags.append({'x': tag.x, 'y': tag.y, 'n': n})
     return render(request,
                   'photohunt/tagset.html',
                   {'session': session,
                    'tagset': tagset,
-                   'tagset_number': tsnum})
+                   'all_tags': all_tags,
+                   'tagset_number': tsnum,
+                   })
