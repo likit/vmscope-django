@@ -44,8 +44,9 @@ def show_tagset(request, session_pk, tsnum=0):
             reports = []
             for tag in tagset.tags.all():
                 q = 'tag_{}'.format(tag.pk)
-                a = request.session.get(q)
+                a = request.session.pop(q, None)
                 res = True if a == tag.answer else False
+                a = a if a != None else ''
                 reports.append((tag, a, res))
             tagsets_results[tagset] = reports
         return render(request,
