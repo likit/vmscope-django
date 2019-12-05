@@ -85,6 +85,9 @@ class ImageTag(models.Model):
     question = models.TextField(blank=True, null=True, max_length=256)
     answer = models.TextField(blank=True, null=True, max_length=256)
 
+    def choices_as_list(self):
+        return self.choices.split(';')
+
 
 class Question(models.Model):
     tagset = models.ForeignKey(ImageTagSet,
@@ -93,6 +96,9 @@ class Question(models.Model):
     choices = models.TextField(blank=True, null=True)
     question = models.TextField(blank=True, null=True)
     answer = models.TextField(blank=True, null=True)
+
+    def choices_as_list(self):
+        return self.choices.split(';')
 
 
 class Session(models.Model):

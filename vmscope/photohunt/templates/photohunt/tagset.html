@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block page_content %}
+{% load static %}
+<section class="hero is-info is-small">
+    <div class="hero-body">
+        <div class="container">
+            <h1 class="title">Photo number {{ tagset_number }}</h1>
+            <h2 class="subtitle">{{ tagset.description }}</h2>
+        </div>
+    </div>
+</section>
+<section class="section">
+    <div class="container">
+        <div class="columns">
+            <div class="column">
+                <img src="{{ tagset.image.image.url }}"/>
+            </div>
+            <div class="column">
+                <form method="post">
+                {% csrf_token %}
+                {% for tag in tagset.tags.all %}
+                <article class="panel is-info">
+                    <div class="panel-heading">
+                        {{ forloop.counter}}. {{ tag.question }}
+                    </div>
+                    <div class="panel-block">
+                        <p class="has-text-grey-light">"{{ tag.description }}"</p>
+                    </div>
+                    <div class="panel-block">
+                        <div class="control">
+                        {% for choice in tag.choices_as_list %}
+                            <label class="radio">
+                                <input type="radio" value="{{ choice }}"
+                                       name="tag_{{tag.pk}}"/>{{ choice }}
+                            </label><br>
+                        {% endfor %}
+                        </div>
+                    </input>
+                    </div>
+                </article>
+                {% endfor %}
+                <input type="hidden" name="tsnum" value="{{ tagset_number }}">
+                <input type="hidden" name="session_pk" value="{{ session.pk }}">
+                <div class="control">
+                    <button class="button is-info" type="submit"><strong>Next</strong></button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

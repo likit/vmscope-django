@@ -11,6 +11,9 @@
                     </p>
                     {% for session in sessions %}
                     <a class="panel-block" href="{% url 'show_session' session.pk %}">
+                        <span class="panel-icon">
+                            <i class="far fa-hand-point-right" aria-hidden="true"></i>
+                        </span>
                         {{ session.title }} ({{ session.tagsets.count }} ชุดคำถาม)
                     </a>
                     {% endfor %}

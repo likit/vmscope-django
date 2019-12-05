@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block page_content %}
+{% load static %}
+<section class="hero is-success">
+    <div class="hero-body">
+        <h1 class="title">Session Ends</h1>
+    </div>
+</section>
+<section class="section">
+    {% for ts,report in results.items %}
+    <p>{{ ts.pk }}) {{ ts.title }}</p>
+    <table class="table">
+        <thead>
+            <th>Question</th>
+            <th>Answer</th>
+            <th>Result</th>
+            <th>Correct Answer</th>
+        </thead>
+        {% for tag,ans,res in report %}
+        <tr>
+            <td>{{ tag.question }}</td>
+            <td>{{ ans }}</td>
+            <td>{{ res }}</td>
+            <td>{{ tag.answer }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endfor %}
+</section>
+<section class="section">
+    <a class="button is-rounded is-success" href="{% url "session_list" %}">Sessions</a>
+    <a class="button is-rounded is-info" href="{% url "show_tagset" session_pk=session.pk tsnum=0 %}">Start Over</a>
+</section>
+{% endblock %}
