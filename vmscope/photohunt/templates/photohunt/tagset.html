@@ -35,7 +35,8 @@
                         {% for choice in tag.choices_as_list %}
                             <label class="radio">
                                 <input type="radio" value="{{ choice }}"
-                                       name="tag_{{tag.pk}}"/>{{ choice }}
+                                       name="tag_{{tag.pk}}"/>
+                                {{ choice }}
                             </label><br>
                         {% endfor %}
                         </div>
