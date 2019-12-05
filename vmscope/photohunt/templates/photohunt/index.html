@@ -1,9 +1,26 @@
 {% extends "base.html" %}
 {% block page_content %}
+{% load static %}
+<section class="section hero is-info">
+    <div class="hero-body has-text-centered">
+        <h1 class="title">Welcome to The Photohunt Learning Platform</h1>
+        <h1 class="subtitle">Developing a Mindset for Microscopic Diagnoses.</h1>
+        <img src="{% static "img/photo.png" %}">
+    </div>
+</section>
 <section class="section">
     <div class="container">
-        <h1 class="title">Welcome to The Photohunt Learning Platform</h1>
         <div class="columns">
+            <div class="column">
+                <div class="box">
+                    <h1 class="title is-size-4">คำแนะนำ</h1>
+                    <p>
+                        ในระบบมีหลาย Session โปรดเลือก session ที่ท่านต้องการจากทางขวามือ
+                        ในแต่ละ session จะมีรูปและชุดคำถามเป็นชุดๆ ให้ทำจนครบเพื่อตรวจและดูคำตอบ
+                        กรุณาเลือกคำตอบที่คิดว่าตรงกับคำถามและหมายเลขที่ระบุในรูปภาพมากที่สุด
+                    </p>
+                </div>
+            </div>
             <div class="column">
                 <article class="panel is-info">
                     <p class="panel-heading">

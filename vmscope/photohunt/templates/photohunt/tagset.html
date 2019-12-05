@@ -43,6 +43,7 @@
                 <input type="hidden" name="session_pk" value="{{ session.pk }}">
                 <div class="control">
                     <button class="button is-info" type="submit"><strong>Next</strong></button>
+                    <a href="{% url "session_list" %}" class="button is-danger">Quit</a>
                 </div>
                 </form>
             </div>
@@ -54,18 +55,26 @@
 <script type="text/javascript" src="{% static 'js/vendors/jquery.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/vendors/createjs.min.js' %}"></script>
 <script type="text/javascript">
-    var tags = {{ all_tags|safe }};
-    var stage = new createjs.Stage("imageCanvas");
-    var bitmap = new createjs.Bitmap("{{ tagset.image.image.url }}");
-    stage.addChild(bitmap);
-    var t;
-    for (var i=0; i<tags.length; i++) {
-        t = new createjs.Text(tags[i].n.toString(), '20px Arial', '#017c1e');
-        t.x = tags[i].x;
-        t.y = tags[i].y;
-        stage.addChild(t);
-    }
-    stage.update();
+    $(document).ready(function() {
+        var tags = {{ all_tags|safe }};
+        var stage = new createjs.Stage("imageCanvas");
+        var bitmap = new createjs.Bitmap("{{ tagset.image.image.url }}");
+        stage.addChild(bitmap);
+        var t;
+        for (var i=0; i<tags.length; i++) {
+            var arrow = new createjs.Bitmap("{% static "img/cursor-white.png" %}");
+            arrow.x = tags[i].x;
+            arrow.y = tags[i].y;
+            arrow.rotation = Math.random() * 180;
+            t = new createjs.Text(tags[i].n.toString(), '22px Arial');
+            t.x = tags[i].x + 20;
+            t.y = tags[i].y; + 15
+            stage.addChild(t);
+            stage.addChild(arrow);
+            arrow.image.onload = function() { stage.update(); }
+        }
+        bitmap.image.onload = function() { stage.update(); }
+    });
 </script>
 {% endblock %}
 

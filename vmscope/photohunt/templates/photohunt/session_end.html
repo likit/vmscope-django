@@ -7,25 +7,44 @@
     </div>
 </section>
 <section class="section">
-    {% for ts,report in results.items %}
-    <p>{{ ts.pk }}) {{ ts.title }}</p>
-    <table class="table">
-        <thead>
-            <th>Question</th>
-            <th>Answer</th>
-            <th>Result</th>
-            <th>Correct Answer</th>
-        </thead>
-        {% for tag,ans,res in report %}
-        <tr>
-            <td>{{ tag.question }}</td>
-            <td>{{ ans }}</td>
-            <td>{{ res }}</td>
-            <td>{{ tag.answer }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-    {% endfor %}
+    <div class="columns">
+        <div class="column">
+            {% for ts,report in results.items %}
+            <p>{{ ts.pk }}) {{ ts.title }}</p>
+            <table class="table">
+                <thead>
+                <th>Question</th>
+                <th>Answer</th>
+                <th>Result</th>
+                <th>Correct Answer</th>
+                </thead>
+                {% for tag,ans,res in report %}
+                <tr>
+                    <td>{{ tag.question }}</td>
+                    <td>{{ ans }}</td>
+                    {% if res %}
+                    <td>
+                <span class="icon">
+                    <i class="fas fa-check has-text-success"></i>
+                </span>
+                    </td>
+                    {% else %}
+                    <td>
+                <span class="icon">
+                   <i class="fas fa-times has-text-danger"></i>
+                </span>
+                    </td>
+                    {% endif %}
+                    <td>{{ tag.answer }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            {% endfor %}
+        </div>
+        <div class="column is-one-third">
+            <img src="{% static "img/gift-box.png" %}" width=300>
+        </div>
+    </div>
 </section>
 <section class="section">
     <a class="button is-rounded is-success" href="{% url "session_list" %}">Sessions</a>
