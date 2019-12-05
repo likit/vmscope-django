@@ -5,7 +5,9 @@
     <div class="hero-body">
         <div class="container">
             <h1 class="title">Photo number {{ tagset_number }}</h1>
+            {% if tagset.description %}
             <h2 class="subtitle">{{ tagset.description }}</h2>
+            {% endif %}
         </div>
     </div>
 </section>
@@ -23,9 +25,11 @@
                     <div class="panel-heading">
                         {{ forloop.counter}}. {{ tag.question }}
                     </div>
+                    {% if tag.description %}
                     <div class="panel-block">
                         <p class="has-text-grey-light">"{{ tag.description }}"</p>
                     </div>
+                    {% endif %}
                     <div class="panel-block">
                         <div class="control">
                         {% for choice in tag.choices_as_list %}

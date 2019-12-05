@@ -10,7 +10,7 @@
     <div class="columns">
         <div class="column">
             {% for ts,report in results.items %}
-            <p>{{ ts.pk }}) {{ ts.title }}</p>
+            <p>{{ forloop.counter }}) {{ ts.title }}</p>
             <table class="table">
                 <thead>
                 <th>Question</th>
