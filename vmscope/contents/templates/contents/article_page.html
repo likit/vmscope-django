@@ -1,14 +1,19 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
 {% load wagtailcore_tags %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<article>
-    <h1>{{ page.title }}</h1>
-    {% include_block page.body %}
-</article>
-</body>
-</html>
+{% block page_content %}
+<section class="hero is-info">
+    <div class="hero-body">
+        <h1 class="title">{{ page.title }}</h1>
+    </div>
+</section>
+<section class="section">
+    <div class="container">
+        <div class="box">
+            <article>
+                {% include_block page.body %}
+            </article>
+        </div>
+    </div>
+</section>
+{% endblock %}
