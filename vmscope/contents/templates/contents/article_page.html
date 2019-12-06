@@ -10,8 +10,20 @@
 <section class="section">
     <div class="container">
         <div class="box">
-            <article>
-                {% include_block page.body %}
+            <div>
+                {% for block in page.body %}
+                {% if block.block_type == 'heading' %}
+                <h2 class="title">{{ block.value }}</h2>
+                {% elif block.block_type == 'paragraph' %}
+                <p>
+                    {% include_block block %}
+                </p>
+                {% else %}
+                <div class="has-text-centered">
+                    {% include_block block %}
+                </div>
+                {% endif %}
+                {% endfor %}
             </article>
         </div>
     </div>
