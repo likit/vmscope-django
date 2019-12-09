@@ -1,32 +1,29 @@
 {% extends 'base.html' %}
 {% block page_content %}
+{% load static %}
+<section class="hero is-info">
+    <div class="hero-body">
+        <h1 class="title">{{ program.name|title }}</h1>
+        <p class="subtitle">{{ program.description }}</p>
+    </div>
+</section>
 <section class="section">
-    <h1 class="title">{{ program.name|title }}</h1>
-    <p>{{ program.description }}</p>
-    <div class="panel">
-        <div class="panel-heading">
-            <h3 class="subtitle">Sessions: {{ session.name }}</h3>
+    {% for session in program.sessions.all %}
+    <div class="box media">
+        <div class="media-left">
+            <div class="media-left">
+                <figure class="image is-rounded is-64x64">
+                    <img src="{% static "img/gym.png" %}">
+                </figure>
+            </div>
         </div>
-        <div class="panel-block">
-            <table class="table">
-                <thead>
-                    <th>Name</th>
-                    <th>Description</th>
-                </thead>
-                <tbody>
-                {% for session in program.sessions.all %}
-                <tr>
-                    <td>
-                        <a href="{% url 'session' session.pk %}">{{ session.name|title }}</a>
-                    </td>
-                    <td>
-                        {{ session.description }}
-                    </td>
-                </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+        <div class="media-content">
+            <a href="{% url 'session' session.pk %}">
+                <h1 class="title is-4">{{ session.name|title }}</h1>
+                <h2 class="subtitle is-6">{{ session.description }}</h2>
+            </a>
         </div>
     </div>
+    {% endfor %}
 </section>
 {% endblock %}
