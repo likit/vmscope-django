@@ -1,31 +1,28 @@
 {% extends "base.html" %}
 
 {% block page_content %}
+<section class="hero is-info">
+    <div class="hero-body">
+    <h1 class="title is-3">{{ session.name }}</h1>
+    <h3 class="subtitle is-4">{{ session.description }}</h3>
+    </div>
+</section>
 <section class="section">
-    <h1 class="title">{{ session.name }}</h1>
-    <div class="panel">
-        <div class="panel-heading">
-            <h3 class="subtitle">Description</h3>
+    <div class="container">
+        <div class="panel">
+            {% for ms in session.microscope_sections.all %}
+            <a class="panel-block" href="{% url 'microscope' ms.pk %}">
+                <span class="panel-icon">
+                    <i class="far fa-hand-point-right has-text-info" aria-hidden="true"></i>
+                </span>
+                <span>{{ ms.name }}</span>
+            </a>
+            {% endfor %}
         </div>
-        <div class="panel-block">
-            <p>{{ session.description }}</p>
-        </div>
-        <div class="panel-block">
-            <div class="panel">
-                <div class="panel-heading">
-                    <span class="icon">
-                        <i class="fas fa-microscope"></i>
-                    </span>&nbsp;
-                    Virtual Microscope
-                </div>
-                <div class="panel-block">
-                    <ul>
-                        {% for ms in session.microscope_sections.all %}
-                        <li><a href="{% url 'microscope' ms.pk %}">{{ ms.name }}</a></li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
+        <div class="has-text-centered">
+            <a class="button is-rounded is-danger"
+               href="{{request.META.HTTP_REFERER|escape}}">Back</a>
+            <a class="button is-rounded is-light" href="/">Home</a>
         </div>
     </div>
 </section>
