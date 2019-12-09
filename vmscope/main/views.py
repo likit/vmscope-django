@@ -1,12 +1,17 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView, ListView, DetailView
 from .models import Discipline, Program, Session
+from photohunt.models import Discipline as PhotohuntDiscipline
 
 
-class IndexPageView(ListView):
-    model = Discipline
+def index(request):
+    vmscope_dcps = list(Discipline.objects.all())
+    photohunt_dcps = list(PhotohuntDiscipline.objects.all())
     template_name = 'main/index.html'
     context_object_name = 'discipline_list'
+    return render(request, 'main/index.html',
+                  {'vmscope_dcps': vmscope_dcps,
+                   'photohunt_dcps': photohunt_dcps})
 
 
 class DisciplinePageView(DetailView):

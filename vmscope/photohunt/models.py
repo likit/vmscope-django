@@ -101,7 +101,27 @@ class Question(models.Model):
         return self.choices.split(';')
 
 
+class Discipline(models.Model):
+    desc = models.TextField(blank=True, null=True)
+    title = models.TextField(blank=False, null=False)
+
+    def __str__(self):
+        return self.title
+
+
+class Program(models.Model):
+    desc = models.TextField(blank=True, null=True)
+    title = models.TextField(blank=False, null=False)
+    discipline = models.ForeignKey(Discipline,
+                                   related_name='programs',
+                                   on_delete=models.CASCADE)
+    def __str__(self):
+        return self.title
+
 class Session(models.Model):
     tagsets = models.ManyToManyField(ImageTagSet)
+    program = models.ForeignKey(Program,
+                                   related_name='sessions',
+                                   on_delete=models.CASCADE)
     desc = models.TextField(blank=True, null=True)
     title = models.TextField(blank=False, null=False)
