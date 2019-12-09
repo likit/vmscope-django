@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block page_content %}
+{% load static %}
+<section class="hero is-info">
+    <div class="hero-body">
+    <h1 class="title">{{ discipline.title|title }}</h1>
+    </div>
+</section>
+<section class="section">
+    <div class="container">
+        {% for program in discipline.programs.all %}
+        <div class="box media">
+            <div class="media-left">
+                <figure class="image is-rounded is-64x64">
+                    <img src="{% static "img/file.png" %}">
+                </figure>
+            </div>
+            <div class="media-content">
+                <a class="title is-4" href="{% url 'photohunt:show_program' program.pk %}">
+                    <h1 class="title is-4 is-link">{{ program.title }}</h1>
+                    <p class="subtitle is-6">เหมาะสำหรับ {{ program.target }}</p>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    <div class="container has-text-centered">
+        <a class="button is-rounded is-light" href="/">Home</a>
+    </div>
+    </div>
+</section>
+{% endblock %}

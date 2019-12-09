@@ -12,7 +12,7 @@
                 <div class="box">
                 <h1 class="title has-text-black">Yo, guys! Your are about to begin working on {{ session.title }}</h1>
                 <article>
-                    <a href="{% url "show_tagset" tsnum=0 session_pk=session.pk %}" class="button is-rounded is-info is-large">
+                    <a href="{% url "photohunt:show_tagset" tsnum=0 session_pk=session.pk %}" class="button is-rounded is-info is-large">
                         <span>Let's get started!</span>
                         <span class="icon">
                             <i class="far fa-hand-point-right"></i>

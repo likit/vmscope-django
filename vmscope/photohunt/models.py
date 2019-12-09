@@ -110,11 +110,18 @@ class Discipline(models.Model):
 
 
 class Program(models.Model):
-    desc = models.TextField(blank=True, null=True)
     title = models.TextField(blank=False, null=False)
     discipline = models.ForeignKey(Discipline,
                                    related_name='programs',
                                    on_delete=models.CASCADE)
+    description = models.TextField(blank=True, null=True)
+    target = models.CharField(max_length=200)
+    status = models.CharField(max_length=200, choices=(
+        ('pending', 'pending'),
+        ('approved', 'approved'),
+        ('disabled', 'disabled')
+    ), default='pending')
+
     def __str__(self):
         return self.title
 

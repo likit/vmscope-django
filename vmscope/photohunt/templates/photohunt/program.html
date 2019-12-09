@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block page_content %}
+{% load static %}
+<section class="hero is-info">
+    <div class="hero-body">
+        <h1 class="title is-3">{{ program.title|title }}</h1>
+        <p class="subtitle is-4">{{ program.description }}</p>
+    </div>
+</section>
+<section class="section">
+    {% for session in program.sessions.all %}
+    <div class="box media">
+        <div class="media-left">
+            <div class="media-left">
+                <figure class="image is-rounded is-64x64">
+                    <img src="{% static "img/gym.png" %}">
+                </figure>
+            </div>
+        </div>
+        <div class="media-content">
+            <a href="{% url 'photohunt:show_session' session.pk %}">
+                <h1 class="title is-4">{{ session.title|title }}</h1>
+                <h2 class="subtitle is-6">{{ session.desc }}</h2>
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+    <div class="container has-text-centered">
+        <a class="button is-rounded is-danger" href="{% url "photohunt:show_discipline" pk=program.discipline.pk %}">Back</a>
+        <a class="button is-rounded is-light" href="/">Home</a>
+    </div>
+</section>
+{% endblock %}

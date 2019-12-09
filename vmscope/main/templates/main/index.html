@@ -58,10 +58,11 @@
                             </h2>
                             <div class="panel">
                                 {% for subject in photohunt_dcps %}
-                                <a href="{% url 'discipline' subject.pk %}"
+                                <a href="{% url 'photohunt:show_discipline' subject.pk %}"
                                    class="panel-block">
                                     <span class="panel-icon">
-                                        <i class="far fa-hand-point-right has-text-info" aria-hidden="true"></i>
+                                        <i class="far fa-hand-point-right has-text-info"
+                                           aria-hidden="true"></i>
                                     </span>
                                     <span>
                                         {{ subject|title }}

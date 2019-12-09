@@ -46,7 +46,7 @@
     </div>
 </section>
 <section class="section">
-    <a class="button is-rounded is-success" href="{% url "session_list" %}">Sessions</a>
-    <a class="button is-rounded is-info" href="{% url "show_tagset" session_pk=session.pk tsnum=0 %}">Start Over</a>
+    <a class="button is-rounded is-success" href="{% url "photohunt:show_program" pk=session.program.pk %}">Sessions</a>
+    <a class="button is-rounded is-info" href="{% url "photohunt:show_tagset" session_pk=session.pk tsnum=0 %}">Start Over</a>
 </section>
 {% endblock %}
