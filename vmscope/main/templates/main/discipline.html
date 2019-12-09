@@ -1,26 +1,28 @@
 {% extends 'base.html' %}
 {% block page_content %}
-<section class="section">
+{% load static %}
+<section class="hero is-info">
+    <div class="hero-body">
     <h1 class="title">{{ discipline.name|title }}</h1>
-    <table class="table">
-        <thead>
-            <th></th>
-            <th>Program</th>
-            <th>Target</th>
-        </thead>
+    </div>
+</section>
+<section class="section">
+    <div class="container">
         {% for program in discipline.programs.all %}
-        <tr>
-            <td>
-                <a href="{% url 'program' program.pk %}">
-                <span class="icon">
-                    <i class="fas fa-chevron-circle-right"></i>
-                </span>
+        <div class="box media">
+            <div class="media-left">
+                <figure class="image is-rounded is-64x64">
+                    <img src="{% static "img/worm.png" %}">
+                </figure>
+            </div>
+            <div class="media-content">
+                <a class="title is-4" href="{% url 'program' program.pk %}">
+                    <h1 class="title is-4 is-link">{{ program.name }}</h1>
+                    <p class="subtitle is-6">{{ program.target }}</p>
                 </a>
-            </td>
-            <td>{{ program.name }}</td>
-            <td>{{ program.target }}</td>
-        </tr>
+            </div>
+        </div>
         {% endfor %}
-    </table>
+    </div>
 </section>
 {% endblock %}
