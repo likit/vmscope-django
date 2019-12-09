@@ -21,7 +21,7 @@
         </div>
         <div class="has-text-centered">
             <a class="button is-rounded is-danger"
-               href="{{request.META.HTTP_REFERER|escape}}">Back</a>
+               href="{% url "program" pk=session.program.pk %}">Back</a>
             <a class="button is-rounded is-light" href="/">Home</a>
         </div>
     </div>

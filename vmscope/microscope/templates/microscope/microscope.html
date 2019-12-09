@@ -12,13 +12,17 @@
 </style>
 {% endblock %}
 {% block page_content %}
-<section class="section" style="background-color: black">
-    <h1 class="title has-text-primary">
+<section class="hero is-info">
+    <div class="hero-body">
+    <h1 class="title">
         <span class="icon">
             <i class="fas fa-microscope"></i>
         </span>&nbsp;
         Virtual Microscope v.0.6
     </h1>
+    </div>
+</section>
+<section class="section" style="background-color: black">
     <div class="columns" style="background-color: black;"> <!-- instruction/information panel -->
         <div class="column is-9 has-text-centered"
              style="background-color: black; border: white;"> <!-- microscope -->
@@ -27,7 +31,7 @@
             </canvas>
         </div>
         <div class="column box is-3" style="background-color: black">
-            <div class="panel">
+            <div class="panel is-info">
                 <div class="panel-heading">
                     {{ scope.name }}
                 </div>
@@ -36,26 +40,19 @@
                 </div>
             </div>
             <div class="panel">
-                <div class="panel-block">
-                    <a href="{% url 'parasite_report' scope.id %}" id="finishLink">
-                        <span class="icon is-large">
-                            <i class="far fa-check-circle fa-2x has-text-light"></i>
-                        </span>&nbsp;
-                        <span class="has-text-light">Finished</span>
-                    </a>
-                </div>
-                <div class="panel-block">
-                    <span class="icon is-large">
-                        <i class="far fa-question-circle fa-2x has-text-light"></i>
-                    </span>&nbsp;
-                    <span class="has-text-light">Help</span>
-                </div>
-                <div class="panel-block">
-                    <span class="icon is-large">
-                        <i class="fas fa-sign-out-alt fa-2x has-text-light"></i>
-                    </span>&nbsp;
-                    <span class="has-text-light">Quit</span>
-                </div>
+                <a href="{% url 'parasite_report' scope.id %}" id="finishLink" class="panel-block">
+                    <span class="panel-icon is-large">
+                        <i class="far fa-check-circle has-text-info"></i>
+                    </span>
+                    <span class="has-text-info">Finished</span>
+                </a>
+                <a class="panel-block"
+                   href="{% url "session" pk=scope.session.pk %}">
+                    <span class="panel-icon">
+                        <i class="fas fa-sign-out-alt has-text-info"></i>
+                    </span>
+                    <span class="has-text-info">Quit</span>
+                </a>
                 <div class="panel-block">
                     <p><strong class="has-text-light">Keyboard Navigation</strong></p>
                     <p class="has-text-light">
