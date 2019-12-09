@@ -25,5 +25,9 @@
         </div>
     </div>
     {% endfor %}
+    <div class="container has-text-centered">
+        <a class="button is-rounded is-danger" href="{{request.META.HTTP_REFERER|escape}}">Back</a>
+        <a class="button is-rounded is-light" href="/">Home</a>
+    </div>
 </section>
 {% endblock %}
