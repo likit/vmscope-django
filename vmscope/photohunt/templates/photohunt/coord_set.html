@@ -32,10 +32,9 @@
     stage.addChild(text);
     stage.update();
     function handleClick(event) {
-        console.log(event.localX, event.localY);
-        text.x = event.localX;
-        text.y = event.localY;
-        text.text = event.localX + ',' + event.localY;
+        text.x = event.localX.toFixed(2);
+        text.y = event.localY.toFixed(2);
+        text.text = 'x=' + text.x + ', y=' + text.y;
         stage.update();
     }
 </script>
