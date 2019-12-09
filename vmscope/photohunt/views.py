@@ -67,5 +67,6 @@ def show_tagset(request, session_pk, tsnum=0):
                   {'session': session,
                    'tagset': tagset,
                    'all_tags': all_tags,
-                   'tagset_number': tsnum,
+                   'tagset_number': tsnum + 1,
+                   'tsnum': tsnum,
                    })

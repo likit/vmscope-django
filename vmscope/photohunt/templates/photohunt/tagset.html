@@ -44,7 +44,7 @@
                     </div>
                 </article>
                 {% endfor %}
-                <input type="hidden" name="tsnum" value="{{ tagset_number }}">
+                <input type="hidden" name="tsnum" value="{{ tsnum }}">
                 <input type="hidden" name="session_pk" value="{{ session.pk }}">
                 <div class="control">
                     <button class="button is-info" type="submit"><strong>Next</strong></button>
@@ -53,6 +53,13 @@
                 </form>
             </div>
         </div>
+    </div>
+</section>
+<section class="section">
+    <div class="container">
+        <progress class="progress is-success"
+                  value="{{ tsnum }}"
+                  max="{{ session.tagsets.all|length }}">{{ tsnum }}</progress>
     </div>
 </section>
 {% endblock %}
