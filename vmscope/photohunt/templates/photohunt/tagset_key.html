@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block page_content %}
+{% load static %}
+<section class="hero is-info is-small">
+    <div class="hero-body">
+        <div class="container">
+            <h1 class="title">Photo number {{ tagset_number }}: Key</h1>
+            {% if tagset.description %}
+            <h2 class="subtitle">{{ tagset.description }}</h2>
+            {% endif %}
+        </div>
+    </div>
+</section>
+<section class="section">
+    <div class="container">
+        <div class="columns">
+            <div class="column">
+                <canvas id="imageCanvas" width="800" height="800"></canvas>
+            </div>
+            <div class="column">
+                {% for tag in tagset.tags.all %}
+                <article class="panel is-info">
+                    <div class="panel-heading">
+                        {{ forloop.counter}}. {{ tag.question }}
+                    </div>
+                    {% if tag.description %}
+                    <div class="panel-block">
+                        <p class="has-text-grey-light">"{{ tag.description }}"</p>
+                    </div>
+                    {% endif %}
+                    <div class="panel-block">
+                        <div class="control">
+                        {% for choice in tag.choices_as_list %}
+                            <label class="radio">
+                                <input type="radio" value="{{ choice }}"
+                                       name="tag_{{tag.pk}}"
+                                       disabled
+                                       {% if choice == tag.answer %}
+                                       checked
+                                       {% endif %}
+                                />
+                                <span {% if choice == tag.answer %} class="has-text-success"{% endif %}>
+                                    {{ choice }}
+                                </span>
+                            </label><br>
+                        {% endfor %}
+                        </div>
+                    </div>
+                </article>
+                {% endfor %}
+                <a class="button is-info"
+                    href="{% url "photohunt:show_tagset_key" session_pk=session.pk tsnum=tagset_number %}">
+                    <strong>Next</strong>
+                </a>
+                <a href="{% url "photohunt:show_program" pk=session.program.pk %}" class="button is-danger">Quit</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+{% block scripts %}
+<script type="text/javascript" src="{% static 'js/vendors/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/vendors/createjs.min.js' %}"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var tags = {{ all_tags|safe }};
+        var stage = new createjs.Stage("imageCanvas");
+        var bitmap = new createjs.Bitmap("{{ tagset.image.image.url }}");
+        stage.addChild(bitmap);
+        var t;
+        for (var i=0; i<tags.length; i++) {
+            var arrow = new createjs.Bitmap("{% static "img/cursor-white.png" %}");
+            arrow.x = tags[i].x;
+            arrow.y = tags[i].y;
+            arrow.rotation = Math.random() * 180;
+            t = new createjs.Text(tags[i].n.toString(), '22px Arial');
+            t.x = tags[i].x + 20;
+            t.y = tags[i].y; + 15
+            stage.addChild(t);
+            stage.addChild(arrow);
+            arrow.image.onload = function() { stage.update(); }
+        }
+        bitmap.image.onload = function() { stage.update(); }
+    });
+</script>
+{% endblock %}
+

@@ -10,7 +10,8 @@
     <div class="columns">
         <div class="column">
             {% for ts,report in results.items %}
-            <p>{{ forloop.counter }}) {{ ts.title }}</p>
+            <p>{{ forloop.counter }}) {{ ts.title }}
+            </p>
             <table class="table">
                 <thead>
                 <th>Question</th>
@@ -46,7 +47,11 @@
     </div>
 </section>
 <section class="section">
-    <a class="button is-rounded is-success" href="{% url "photohunt:show_program" pk=session.program.pk %}">Sessions</a>
-    <a class="button is-rounded is-info" href="{% url "photohunt:show_tagset" session_pk=session.pk tsnum=0 %}">Start Over</a>
+    <a class="button is-rounded is-info"
+       href="{% url "photohunt:show_tagset" session_pk=session.pk tsnum=0 %}">Back</a>
+    <a href="{% url "photohunt:show_tagset_key" session_pk=session.pk tsnum=0 %}"
+        class="button is-rounded is-warning">
+    คลิกดูรูปเฉลย
+    </a>
 </section>
 {% endblock %}
