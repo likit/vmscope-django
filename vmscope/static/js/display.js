@@ -139,6 +139,7 @@ function preload() {
             });
         });
         queue.loadManifest(items);
+        $('body').loading('stop');
     });
 }
 
