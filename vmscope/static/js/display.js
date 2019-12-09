@@ -100,7 +100,7 @@ function onDPad(e) {
 
 function preload() {
     queue = new createjs.LoadQueue();
-    queue.addEventListener("complete", draw);
+    queue.addEventListener("complete", to_draw);
     var items = [];
 
     $.when($.getJSON('/api/microscope/'+scopeId)).then(function(data) {
@@ -139,7 +139,6 @@ function preload() {
             });
         });
         queue.loadManifest(items);
-        $('body').loading('stop');
     });
 }
 
@@ -488,6 +487,11 @@ function tick() {
     }
     timeText.text = 'Time='+et.toFixed(0)+' sec';
     stage.update();
+}
+
+function to_draw() {
+    draw();
+    $('body').loading('stop');
 }
 
 run();
