@@ -1,1 +1,1 @@
-web gunicorn vmscope.wsgi
+web: gunicorn --pythonpath vmscope vmscope.wsgi
