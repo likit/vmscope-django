@@ -21,4 +21,4 @@ urlpatterns = [
     path('photohunt/', include(photohunt_urls)),
     path('api/', include(api_urls)),
     path('', include(main_urls), name='main'),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
