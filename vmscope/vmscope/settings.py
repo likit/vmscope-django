@@ -29,7 +29,10 @@ if os.path.isfile(dotenv_file):
 SECRET_KEY = 'i*sx=j_e46w_kh-0o%5f6g-1-%wx6fi-qu4^lkbmkeeexwwb-y'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+if os.environ.get('DEBUG', 'False') == 'TRUE':
+    DEBUG = True
+else:
+    DEBUG = False
 
 ALLOWED_HOSTS = ['localhost', '178.128.16.81', 'vmscope.herokuapp.com']
 
