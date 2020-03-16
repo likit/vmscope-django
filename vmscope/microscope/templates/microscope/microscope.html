@@ -30,7 +30,7 @@
                     style="background: black;">
             </canvas>
         </div>
-        <div class="column box is-3" style="background-color: black">
+        <div class="column is-3" style="background-color: black">
             <div class="panel is-info">
                 <div class="panel-heading">
                     {{ scope.name }}
@@ -40,7 +40,8 @@
                 </div>
             </div>
             <div class="panel">
-                <a href="{% url 'parasite_report' scope.id %}" id="finishLink" class="panel-block">
+                <a href="{% url 'parasite_report' scope.id %}"
+                   id="finishLink" class="panel-block">
                     <span class="panel-icon is-large">
                         <i class="far fa-check-circle has-text-info"></i>
                     </span>
@@ -54,13 +55,33 @@
                     <span class="has-text-info">Quit</span>
                 </a>
                 <div class="panel-block">
-                    <p><strong class="has-text-light">Keyboard Navigation</strong></p>
                     <p class="has-text-light">
-                        Use arrow keys to navigate and Shift-Z to zoom in and out.
+                        Use arrow keys to navigate and press <span class="tag is-info is-large">Z</span> to zoom in and out.
                     </p>
                 </div>
                 <div class="panel-block">
                     <table class="table noborder" style="background-color: black">
+                        <tr border="0">
+                            <td colspan="2">
+                                <strong class="has-text-light">Zoom Level</strong>
+                            </td>
+                            <td>
+                                <button data-bind="click: zoom, visible: !isZoomed()"
+                                        class="button is-large is-outlined is-rounded is-info">
+                                    <span class="icon">
+                                        <i class="fas fa-sync-alt"></i>
+                                    </span>
+                                    <span>10x</span>
+                                </button>
+                                <button data-bind="click: zoom, visible: isZoomed()"
+                                        class="button is-large is-outlined is-rounded is-info">
+                                    <span class="icon">
+                                        <i class="fas fa-sync-alt"></i>
+                                    </span>
+                                    <span>40x</span>
+                                </button>
+                            </td>
+                        </tr>
                         <tr border="0">
                             <td colspan="3"><strong class="has-text-light">Mouse Navigation</strong></td>
                         </tr>
@@ -82,14 +103,14 @@
                         </span>
                             </td>
                             <td>
-                        <span class="icon is-large" data-bind="visible: !isZoomed()">
-                            <i class="fas fa-plus-circle fa-3x has-text-info"
-                               data-bind="click: zoom"></i>
-                        </span>
-                                <span class="icon is-large" data-bind="visible: isZoomed()">
-                            <i class="fas fa-minus-circle fa-3x has-text-info"
-                               data-bind="click: zoom"></i>
-                        </span>
+                                <span class="icon is-large" data-bind="visible: !isZoomed()">
+                                    <i class="fas fa-plus-circle fa-3x has-text-info"
+                                       data-bind="click: zoom"></i>
+                                </span>
+                                        <span class="icon is-large" data-bind="visible: isZoomed()">
+                                    <i class="fas fa-minus-circle fa-3x has-text-info"
+                                       data-bind="click: zoom"></i>
+                                </span>
                             </td>
                             <td>
                         <span class="icon is-large">
