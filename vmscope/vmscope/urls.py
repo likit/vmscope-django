@@ -14,6 +14,7 @@ from photohunt import urls as photohunt_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accounts/', include('django.contrib.auth.urls')),
     re_path(r'^cmsadmin/', include(wagtailadmin_urls)),
     re_path(r'^documents/', include(wagtaildocs_urls)),
     re_path(r'^pages/', include(wagtail_urls)),
@@ -21,4 +22,4 @@ urlpatterns = [
     path('photohunt/', include(photohunt_urls)),
     path('api/', include(api_urls)),
     path('', include(main_urls), name='main'),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
