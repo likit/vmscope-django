@@ -3,7 +3,9 @@
     <div class="navbar-brand">
         <a class="navbar-item" href="https://bulma.io">
             <figure class="image is-32x32">
-                <img src="{% static "img/microscope.png" %}"/>
+                <a href="/">
+                    <img src="{% static "img/microscope.png" %}"/>
+                </a>
             </figure>
         </a>
 
@@ -16,51 +18,36 @@
 
     <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
-            <a class="navbar-item" href="/">
-                Home
-            </a>
         </div>
         <div class="navbar-end">
             {% if user.is_authenticated %}
-
-            <div class="navbar-item has-dropdown is-hoverable">
-                <a class="navbar-link">
-                    Account
+            <div class="navbar-item">
+                <a class="navbar-item is-rounded is-outlined is-info">
+                    <span class="icon">
+                        <i class="fas fa-book"></i>
+                    </span>
+                    <span>Articles</span>
                 </a>
-
-                <div class="navbar-dropdown">
-                    <a class="navbar-item">
-                        About
-                    </a>
-                    <a class="navbar-item">
-                        Jobs
-                    </a>
-                    <a class="navbar-item">
-                        Contact
-                    </a>
-                    <hr class="navbar-divider">
-                    <a class="navbar-item">
-                        Report an issue
-                    </a>
-                </div>
+                <a class="navbar-item" href="{% url 'edit_profile' %}">
+                        <span class="icon is-medium">
+                            <i class="fas fa-user-circle"></i>
+                        </span>
+                    <span>{{ user.username }}</span>
+                </a>
             </div>
             <div class="navbar-item">
                 <div class="buttons">
-                    <a class="button is-light" href="{% url 'logout' %}">
+                    <a class="button is-light is-outlined" href="{% url 'logout' %}">
                         Log out
-                    </a>
-                </div>
-            </div>
-            <div class="navbar-item">
-                <div class="buttons">
-                    <a class="button is-primary">
-                        <strong>Sign up</strong>
                     </a>
                 </div>
             </div>
             {% else %}
             <div class="navbar-item">
                 <div class="buttons">
+                    <a class="button is-primary" href="{% url 'signup' %}">
+                        <strong>Sign up</strong>
+                    </a>
                     <a class="button is-light" href="{% url 'login' %}">
                         Log in
                     </a>

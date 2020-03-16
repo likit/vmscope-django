@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block page_content %}
+{% block navbar  %}
+{% include "navbar.html" %}
+{% endblock %}
+<section class="section">
+    <div class="container">
+        <div class="columns">
+            <div class="column is-one-third is-offset-4">
+                <div class="box">
+                    <h2 class="title has-text-centered">Log In</h2>
+                    <form method="post">
+                        {% csrf_token %}
+                        {% for field in form.visible_fields %}
+                        <div class="field">
+                            <label class="label">{{ field.label_tag }}</label>
+                            <div class="control">
+                                {% render_field field class="input" %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                        <div class="has-text-centered">
+                            <button type="submit" class="button is-primary">Log In</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

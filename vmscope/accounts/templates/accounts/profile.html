@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block page_content %}
+{% block navbar %}
+{% include "navbar.html" %}
+{% endblock %}
+<section class="section">
+    <div class="container">
+        <div class="columns">
+            <div class="column is-one-third is-offset-4">
+                <div class="box">
+                    <h1 class="title has-text-centered">Your Profile</h1>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="field">
+                            <label class="label">รหัสประจำตัวนักศึกษา 7 หลัก</label>
+                            <div class="control">
+                                {% render_field form.stuid class="input" %}
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">สาขาวิชาเรียน</label>
+                            <div class="control">
+                                {% render_field form.study_program class="input" %}
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">ต้นสังกัด/มหาวิทยาลัย</label>
+                            <div class="control">
+                                {% render_field form.institution class="input" %}
+                            </div>
+                        </div>
+                        <div class="has-text-right">
+                            <button class="button is-primary" type="submit">Save</button>
+                            <a class="button is-warning" href="/">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+{% endblock %}
