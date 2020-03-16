@@ -13,23 +13,31 @@
     </div>
 </section>
 <section class="section">
+    <div class="container">
     {% for session in program.sessions.all %}
-    <div class="box media">
-        <div class="media-left">
-            <div class="media-left">
-                <figure class="image is-rounded is-64x64">
-                    <img src="{% static "img/gym.png" %}">
-                </figure>
+    <div class="columns">
+        <div class="column is-two-thirds is-offset-2">
+            <div class="box media">
+                <div class="media-left">
+                    <div class="media-left">
+                        <figure class="image is-rounded is-64x64">
+                            <img src="{% static "img/gym.png" %}">
+                        </figure>
+                    </div>
+                </div>
+                <div class="media-content">
+                    <a href="{% url 'session' session.pk %}">
+                        <h1 class="title is-4">{{ session.name|title }}</h1>
+                        <h2 class="subtitle is-6">{{ session.description }}</h2>
+                    </a>
+                </div>
             </div>
-        </div>
-        <div class="media-content">
-            <a href="{% url 'session' session.pk %}">
-                <h1 class="title is-4">{{ session.name|title }}</h1>
-                <h2 class="subtitle is-6">{{ session.description }}</h2>
-            </a>
         </div>
     </div>
     {% endfor %}
+    </div>
+</section>
+<section class="section">
     <div class="container has-text-centered">
         <a class="button is-rounded is-danger" href="{% url "discipline" pk=program.discipline.pk %}">Back</a>
         <a class="button is-rounded is-light" href="/">Home</a>

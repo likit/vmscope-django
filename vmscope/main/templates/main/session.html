@@ -14,21 +14,27 @@
 </section>
 <section class="section">
     <div class="container">
-        <div class="panel">
-            {% for ms in session.microscope_sections.all %}
-            <a class="panel-block" href="{% url 'microscope' ms.pk %}">
+        <div class="columns">
+            <div class="column is-two-thirds is-offset-2">
+                <div class="panel">
+                    {% for ms in session.microscope_sections.all %}
+                    <a class="panel-block" href="{% url 'microscope' ms.pk %}">
                 <span class="panel-icon">
                     <i class="far fa-hand-point-right has-text-info" aria-hidden="true"></i>
                 </span>
-                <span>{{ ms.name }}</span>
-            </a>
-            {% endfor %}
+                        <span>{{ ms.name }}</span>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
-        <div class="has-text-centered">
-            <a class="button is-rounded is-danger"
-               href="{% url "program" pk=session.program.pk %}">Back</a>
-            <a class="button is-rounded is-light" href="/">Home</a>
-        </div>
+    </div>
+</section>
+<section class="section">
+    <div class="has-text-centered">
+        <a class="button is-rounded is-danger"
+           href="{% url "program" pk=session.program.pk %}">Back</a>
+        <a class="button is-rounded is-light" href="/">Home</a>
     </div>
 </section>
 {% endblock %}
