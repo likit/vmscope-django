@@ -13,113 +13,91 @@
 {% endblock %}
 {% block page_content %}
 <section class="section" style="background-color: black">
-    <div class="columns" style="background-color: black;"> <!-- instruction/information panel -->
-        <div class="column is-9 has-text-centered"
-             style="background-color: black; border: white;"> <!-- microscope -->
-            <canvas width="700" height="650" id="canvas"
-                    style="background: black;">
-            </canvas>
-        </div>
+    <div class="columns is-centered" style="background-color: black;"> <!-- instruction/information panel -->
         <div class="column is-3" style="background-color: black">
-            <div class="panel is-info">
+            <div class="panel is-info" style="background-color: white">
                 <div class="panel-heading">
                     {{ scope.name }}
                 </div>
-                <div class="panel-block has-text-light">
+                <div class="panel-block">
                     {{ scope.desc }}
                 </div>
-            </div>
-            <div class="panel">
-                <a href="{% url 'parasite_report' scope.id %}"
-                   id="finishLink" class="panel-block">
-                    <span class="panel-icon is-large">
-                        <i class="far fa-check-circle has-text-info"></i>
-                    </span>
-                    <span class="has-text-info">Finished</span>
-                </a>
-                <a class="panel-block"
-                   href="{% url "session" pk=scope.session.pk %}">
-                    <span class="panel-icon">
-                        <i class="fas fa-sign-out-alt has-text-info"></i>
-                    </span>
-                    <span class="has-text-info">Quit</span>
-                </a>
                 <div class="panel-block">
-                    <p class="has-text-light">
-                        Use arrow keys to navigate and press <span class="tag is-info is-large">Z</span> to zoom in and out.
-                    </p>
+                    <div class="buttons is-centered">
+                        <a class="button is-success"
+                           href="{% url 'parasite_report' scope.id %}" id="finishLink">
+                        <span class="icon">
+                            <i class="far fa-check-circle"></i>
+                        </span>
+                            <span>Done</span>
+                        </a>
+                        <a class="button is-danger" href="{% url "session" pk=scope.session.pk %}">
+                        <span class="icon">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </span>
+                        <span>Quit</span>
+                        </a>
+                    </div>
                 </div>
-                <div class="panel-block">
-                    <table class="table noborder" style="background-color: black">
-                        <tr border="0">
-                            <td colspan="2">
-                                <strong class="has-text-light">Zoom Level</strong>
-                            </td>
-                            <td>
-                                <button data-bind="click: zoom, visible: !isZoomed()"
-                                        class="button is-large is-outlined is-rounded is-info">
-                                    <span class="icon">
-                                        <i class="fas fa-sync-alt"></i>
-                                    </span>
-                                    <span>10x</span>
-                                </button>
-                                <button data-bind="click: zoom, visible: isZoomed()"
-                                        class="button is-large is-outlined is-rounded is-info">
-                                    <span class="icon">
-                                        <i class="fas fa-sync-alt"></i>
-                                    </span>
-                                    <span>40x</span>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr border="0">
-                            <td colspan="3"><strong class="has-text-light">Mouse Navigation</strong></td>
-                        </tr>
-                        <tr border="0">
-                            <td></td>
-                            <td>
-                        <span class="icon is-large">
-                            <i class="far fa-arrow-alt-circle-up fa-4x has-text-info"
-                               data-bind="click: function(data, event) { moveEgg('up', 20); }"></i>
-                        </span>
-                            </td>
-                            <td></td>
-                        </tr>
-                        <tr border="0">
-                            <td>
-                        <span class="icon is-large">
-                            <i class="far fa-arrow-alt-circle-left fa-4x has-text-info"
-                               data-bind="click: function(data, event) { moveEgg('left', 20); }"></i>
-                        </span>
-                            </td>
-                            <td>
-                                <span class="icon is-large" data-bind="visible: !isZoomed()">
-                                    <i class="fas fa-plus-circle fa-3x has-text-info"
-                                       data-bind="click: zoom"></i>
-                                </span>
-                                        <span class="icon is-large" data-bind="visible: isZoomed()">
-                                    <i class="fas fa-minus-circle fa-3x has-text-info"
-                                       data-bind="click: zoom"></i>
-                                </span>
-                            </td>
-                            <td>
-                        <span class="icon is-large">
-                            <i class="far fa-arrow-alt-circle-right fa-4x has-text-info"
-                               data-bind="click: function(data, event) { moveEgg('right', 20); }"></i>
-                        </span>
-                            </td>
-                        </tr>
-                        <tr border="0">
-                            <td></td>
-                            <td>
-                        <span class="icon is-large">
-                            <i class="far fa-arrow-alt-circle-down fa-4x has-text-info"
-                               data-bind="click: function(data, event) { moveEgg('down', 20); }"></i>
-                        </span>
-                            </td>
-                            <td></td>
-                        </tr>
-                    </table>
+            </div>
+        </div>
+        <div class="column is-9 has-text-centered"
+             style="background-color: black; border: white;"> <!-- microscope -->
+            <div class="columns is-centered">
+                <div class="column">
+                    <canvas width="700" height="650" id="canvas" style="background: black;"></canvas>
+                </div>
+            </div>
+            <div class="columns is-centered">
+                <div class="column is-narrow">
+                    <div class="buttons is-centered">
+                        <button class="button is-large is-dark">
+                            <span class="icon">
+                                <i class="far fa-arrow-alt-circle-up fa-2x has-text-info"
+                                   data-bind="click: function(data, event) { moveEgg('up', 40); }"></i>
+                            </span>
+                        </button>
+                        <button class="button is-large is-dark">
+                            <span class="icon is-large">
+                                <i class="far fa-arrow-alt-circle-down fa-2x has-text-info"
+                                   data-bind="click: function(data, event) { moveEgg('down', 40); }"></i>
+                            </span>
+                        </button>
+                        <button data-bind="click: zoom, visible: !isZoomed()" class="button is-large is-dark">
+                            <span class="icon">
+                                <i class="fas fa-sync-alt"></i>
+                            </span>
+                            <span>10x</span>
+                        </button>
+                        <button data-bind="click: zoom, visible: isZoomed()" class="button is-large is-dark">
+                            <span class="icon">
+                                <i class="fas fa-sync-alt"></i>
+                            </span>
+                            <span>40x</span>
+                        </button>
+                        <button class="button is-large is-dark">
+                            <span class="icon is-large">
+                                <i class="far fa-arrow-alt-circle-left fa-2x has-text-info"
+                                   data-bind="click: function(data, event) { moveEgg('left', 40); }"></i>
+                            </span>
+                        </button>
+                        <button class="button is-large is-dark">
+                            <span class="icon is-large">
+                                <i class="far fa-arrow-alt-circle-right fa-2x has-text-info"
+                                   data-bind="click: function(data, event) { moveEgg('right', 40); }"></i>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="columns is-centered">
+                <div class="is-narrow">
+                    <div class="box">
+                        <p>
+                            For a notebook or a desktop computer, use arrow keys to navigate and press
+                            <span class="tag is-info is-large">Z</span> to zoom in and out.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
