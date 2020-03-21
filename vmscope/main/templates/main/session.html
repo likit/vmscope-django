@@ -19,10 +19,10 @@
                 <div class="panel">
                     {% for ms in session.microscope_sections.all %}
                     <a class="panel-block" href="{% url 'microscope' ms.pk %}">
-                <span class="panel-icon">
-                    <i class="far fa-hand-point-right has-text-info" aria-hidden="true"></i>
-                </span>
-                        <span>{{ ms.name }}</span>
+                        <span class="panel-icon">
+                            <i class="fas fa-play has-text-link"></i>
+                        </span>
+                        <span class="is-size-4">{{ ms.name }}</span>
                     </a>
                     {% endfor %}
                 </div>

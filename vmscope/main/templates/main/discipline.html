@@ -23,8 +23,10 @@
                         </figure>
                     </div>
                     <div class="media-content">
-                        <a class="title is-4" href="{% url 'program' program.pk %}">
-                            <h1 class="title is-4 is-link">{{ program.name }}</h1>
+                        <a href="{% url 'program' program.pk %}">
+                            <span class="is-size-4 is-link">
+                                {{ program.name }}
+                            </span>
                             <p class="subtitle is-6">เหมาะสำหรับ {{ program.target }}</p>
                         </a>
                     </div>
