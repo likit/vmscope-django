@@ -9,7 +9,7 @@
             <h1 class="title is-size-4 has-text-centered">Report for {{scope_section.name}} (Section ID={{scope_section.id}})</h1>
             <div class="panel">
             <div class="panel-heading">
-                <h4 class="title is-size-5">Parasites found</h4>
+                <h4 class="title is-size-5">Report</h4>
             </div>
                 {% if corrects or incorrects %}
                 <div class="panel-block">
@@ -30,7 +30,7 @@
                 </div>
                 <div class="panel-block">
                     <ul>
-                        <h3 class="title is-size-6">{{missing|length}} not unidentified {{missing|pluralize}}</h3>
+                        <h3 class="title is-size-6">{{missing|length}} parasite{{missing|pluralize}} not found</h3>
                         {% for parasite in missing %}
                         <li class="has-text-danger"><i>{{parasite}}</i></li>
                         {% endfor %}
@@ -39,7 +39,7 @@
             </div>
             <div class="panel">
                 <div class="panel-heading">
-                    <h3>References</h3>
+                    <h3 class="title is-size-5">References</h3>
                 </div>
                 {% for pc in parasite_components %}
                 {% if pc.parasite.parasite_pages.all %}
@@ -71,14 +71,21 @@
                         {% endfor %}
                         </div>
                     </div>
-                    <br>
-                <button type="submit" class="button is-primary is-rounded">Submit</button>
-                <a href="{% url 'microscope' scope_section.id %}" class="button is-rounded">
-                    <span class="icon is-large">
-                        <i class="fas fa-redo-alt has-text-dark"></i>
-                    </span>&nbsp;
-                    Start over
-                </a>
+                    <div class="panel-block">
+                        <div class="field is-grouped-centered is-grouped">
+                            <div class="control">
+                                <button type="submit" class="button is-primary">Submit</button>
+                            </div>
+                            <div class="control">
+                                <a href="{% url 'microscope' scope_section.id %}" class="button">
+                            <span class="icon is-large">
+                                <i class="fas fa-redo-alt has-text-dark"></i>
+                            </span>&nbsp;
+                                    Start over
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </form>
                 {% endif %}
             </div>
@@ -88,17 +95,23 @@
     <div class="columns">
         <div class="column is-offset-4 is-one-third">
             <div class="buttons is-centered">
-                <a href="/" class="button is-rounded is-link">
+                <a href="/" class="button is-link">
                     <span class="icon is-large">
                         <i class="fas fa-home"></i>
                     </span>&nbsp;
                     Home
                 </a>
-                <a href="{% url 'microscope' scope_section.id %}" class="button is-rounded is-primary">
+                <a href="{% url 'microscope' scope_section.id %}" class="button is-warning">
                     <span class="icon is-large">
                         <i class="fas fa-redo-alt"></i>
                     </span>&nbsp;
                     Start over
+                </a>
+                <a href="{% url 'session' scope_section.session.id %}" class="button is-primary">
+                    <span class="icon is-large">
+                        <i class="fas fa-list"></i>
+                    </span>&nbsp;
+                    Session
                 </a>
             </div>
         </div>
