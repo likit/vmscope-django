@@ -12,6 +12,7 @@
             <div class="column has-text-centered">
                 <h1 class="title">ยินดีต้อนรับสู่ MUMT Online Lab Tutor</h1>
                 <h3 class="subtitle">นวัตกรรมเพื่อการเรียนรู้และพัฒนาทักษะเพื่อการวินิจฉัยด้วยกล้องจุลทรรศน์</h3>
+                <h4 class="title is-size-6">โดย ภาควิชาเทคนิคการแพทย์ชุมชน คณะเทคนิคการแพทย์ มหาวิทยาลัยมหิดล</h4>
                 <img src="{% static "img/professor.png" %}" width="200"/>
             </div>
         </div>
@@ -47,17 +48,14 @@
                             <h2 class="subtitle is-size-6">
                                 กล้องจุลทรรศน์เสมือนจริงสำหรับฝึกตรวจหาเชื้อโรคและอื่นๆ ด้วยกล้องจุลทรรศน์ที่จำลองของจริง สามารถเปลี่ยนเลนส์เพื่อขยายขนาดได้
                             </h2>
-                            <div class="panel">
-                                {% for subject in vmscope_dcps %}
-                                <a href="{% url 'discipline' subject.pk %}"
-                                   class="panel-block">
-                                    <span class="panel-icon">
-                                        <i class="far fa-hand-point-right has-text-info" aria-hidden="true"></i>
-                                    </span>
-                                    <span>{{ subject|title }}</span>
-                                </a>
-                                {% endfor %}
-                            </div>
+                            {% for subject in vmscope_dcps %}
+                            <a href="{% url 'discipline' subject.pk %}">
+                                <span class="icon is-large">
+                                    <i class="fas fa-caret-square-right fa-2x"></i>
+                                </span>
+                                <span class="is-size-3">{{ subject|title }}</span>
+                            </a>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
