@@ -3,14 +3,18 @@ from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView
 from .models import (ParasiteImage, MicroscopeSection,
                      Parasite, MicroscopePlayRecord)
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 # Create your views here.
-class ParasiteImageListView(ListView):
+class ParasiteImageListView(LoginRequiredMixin, ListView):
     model = ParasiteImage
     template_name = 'microscope/pr_image_list.html'
     context_object_name = 'images'
 
 
+@login_required
 def parasite_report(request, pk, record_pk):
     corrects = []
     incorrects = []
@@ -47,7 +51,7 @@ def parasite_report(request, pk, record_pk):
                    'parasite_components': parasite_components,
                    })
 
-
+@login_required
 def display_microscope_section(request, pk):
     scope_section = get_object_or_404(MicroscopeSection, pk=int(pk))
     record = MicroscopePlayRecord(section=scope_section, user=request.user)

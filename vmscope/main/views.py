@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.views.generic import TemplateView, ListView, DetailView
 from .models import Discipline, Program, Session
 from photohunt.models import Discipline as PhotohuntDiscipline
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 
 def index(request):
@@ -14,19 +16,19 @@ def index(request):
                    'photohunt_dcps': photohunt_dcps})
 
 
-class DisciplinePageView(DetailView):
+class DisciplinePageView(LoginRequiredMixin, DetailView):
     model = Discipline
     context_object_name = 'discipline'
     template_name = 'main/discipline.html'
 
 
-class ProgramPageView(DetailView):
+class ProgramPageView(LoginRequiredMixin, DetailView):
     model = Program
     context_object_name = 'program'
     template_name = 'main/program.html'
 
 
-class SessionPageView(DetailView):
+class SessionPageView(LoginRequiredMixin, DetailView):
     model = Session
     context_object_name = 'session'
     template_name = 'main/session.html'

@@ -9,6 +9,11 @@ class Profile(models.Model):
     stuid = models.CharField(max_length=7, blank=True)
     study_program = models.CharField(max_length=500, blank=True)
     institution = models.CharField(max_length=500, blank=True)
+    email = models.EmailField(max_length=256, blank=True)
+
+    @property
+    def is_empty(self):
+        return any([self.email, self.stuid, self.study_program, self.institution])
 
 
 @receiver(post_save, sender=User)

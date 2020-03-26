@@ -31,7 +31,13 @@
                                 {% render_field form.institution class="input" %}
                             </div>
                         </div>
-                        <div class="has-text-right">
+                        <div class="field">
+                            <label class="label">E-mail</label>
+                            <div class="control">
+                                {% render_field form.email class="input" %}
+                            </div>
+                        </div>
+                        <div class="buttons is-centered">
                             <button class="button is-primary" type="submit">Save</button>
                             <a class="button is-warning" href="/">Cancel</a>
                         </div>
