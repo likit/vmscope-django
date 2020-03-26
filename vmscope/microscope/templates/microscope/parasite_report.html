@@ -2,10 +2,11 @@
 {% load static %}
 
 {% block page_content %}
-<section class="section">
+<section class="hero is-white">
+    <div class="hero-body">
     <div class="columns">
-        <div class="column is-5 is-offset-3 box">
-            <h1 class="title is-size-4">Report for {{scope_section.name}} (Section ID={{scope_section.id}})</h1>
+        <div class="column is-one-third is-offset-4">
+            <h1 class="title is-size-4 has-text-centered">Report for {{scope_section.name}} (Section ID={{scope_section.id}})</h1>
             <div class="panel">
             <div class="panel-heading">
                 <h4 class="title is-size-5">Parasites found</h4>
@@ -21,12 +22,22 @@
                 </div>
                 <div class="panel-block">
                     <ul>
-                        <h3 class="title is-size-6">{{incorrects|length}} parasite{{incorrects|pluralize}} not found</h3>
+                        <h3 class="title is-size-6">{{incorrects|length}} parasite{{incorrects|pluralize}} misidentified</h3>
                         {% for parasite in incorrects %}
                         <li class="has-text-danger"><i>{{parasite}}</i></li>
                         {% endfor %}
                     </ul>
                 </div>
+                <div class="panel-block">
+                    <ul>
+                        <h3 class="title is-size-6">{{missing|length}} not unidentified {{missing|pluralize}}</h3>
+                        {% for parasite in missing %}
+                        <li class="has-text-danger"><i>{{parasite}}</i></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="panel">
                 <div class="panel-heading">
                     <h3>References</h3>
                 </div>
@@ -75,21 +86,24 @@
     </div>
     {% if corrects or incorrects %}
     <div class="columns">
-        <div class="column is-offset-5 is-3">
-            <a href="/" class="button is-rounded">
-                <span class="icon is-large">
-                    <i class="fas fa-home has-text-dark"></i>
-                </span>&nbsp;
-                Home
-            </a>
-            <a href="{% url 'microscope' scope_section.id %}" class="button is-rounded">
-                <span class="icon is-large">
-                    <i class="fas fa-redo-alt has-text-dark"></i>
-                </span>&nbsp;
-                Start over
-            </a>
+        <div class="column is-offset-4 is-one-third">
+            <div class="buttons is-centered">
+                <a href="/" class="button is-rounded is-link">
+                    <span class="icon is-large">
+                        <i class="fas fa-home"></i>
+                    </span>&nbsp;
+                    Home
+                </a>
+                <a href="{% url 'microscope' scope_section.id %}" class="button is-rounded is-primary">
+                    <span class="icon is-large">
+                        <i class="fas fa-redo-alt"></i>
+                    </span>&nbsp;
+                    Start over
+                </a>
+            </div>
         </div>
     </div>
     {% endif %}
+    </div>
 </section>
 {% endblock %}
