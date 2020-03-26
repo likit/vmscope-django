@@ -3,6 +3,7 @@ import random
 from django.db import models
 from django.utils import timezone
 from django.utils.safestring import mark_safe
+from django.contrib.auth.models import User
 from wagtail.core.models import Page
 
 # Create your models here.
@@ -172,3 +173,11 @@ class ParasitePage(models.Model):
                              on_delete=models.CASCADE)
     def __str__(self):
         return '{} {}, page slug={}'.format(self.parasite.genus, self.parasite.species, self.page.slug)
+
+
+class MicroscopePlayRecord(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    saved_at = models.DateTimeField(null=True)
+    score = models.IntegerField(default=0)
+    section = models.ForeignKey(MicroscopeSection, on_delete=models.CASCADE)
