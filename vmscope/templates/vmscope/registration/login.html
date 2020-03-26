@@ -21,8 +21,13 @@
                             </div>
                         </div>
                         {% endfor %}
-                        <div class="has-text-centered">
-                            <button type="submit" class="button is-primary">Log In</button>
+                        <div class="field is-grouped is-grouped-centered">
+                            <div class="control">
+                                <button type="submit" class="button is-primary">Log In</button>
+                            </div>
+                            <div class="control">
+                                <a class="button is-light" href="{% url "signup" %}">ลงทะเบียนผู้ใช้ใหม่</a>
+                            </div>
                         </div>
                     </form>
                 </div>

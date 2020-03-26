@@ -32,9 +32,21 @@
 </section>
 <section class="section">
     <div class="has-text-centered">
-        <a class="button is-rounded is-danger"
-           href="{% url "program" pk=session.program.pk %}">Back</a>
-        <a class="button is-rounded is-light" href="/">Home</a>
+        <div class="buttons is-centered">
+            <a class="button is-danger"
+               href="{% url "program" pk=session.program.pk %}">
+                <span class="icon">
+                    <i class="fas fa-angle-left"></i>
+                </span>
+                <span>Back</span>
+            </a>
+            <a class="button is-light" href="/">
+                <span class="icon">
+                    <i class="fas fa-home"></i>
+                </span>
+                <span>Home</span>
+            </a>
+        </div>
     </div>
 </section>
 {% endblock %}
