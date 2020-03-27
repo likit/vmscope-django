@@ -46,6 +46,7 @@
                 {% endfor %}
                 <input type="hidden" name="tsnum" value="{{ tsnum }}">
                 <input type="hidden" name="session_pk" value="{{ session.pk }}">
+                <input type="hidden" name="record_pk" value="{{ record_pk }}">
                 <div class="control">
                     <button class="button is-info" type="submit"><strong>Next</strong></button>
                     <a href="{% url "photohunt:show_program" pk=session.program.pk %}" class="button is-danger">Quit</a>
