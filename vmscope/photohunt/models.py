@@ -2,6 +2,7 @@ import os
 from django.utils import timezone
 from django.db import models
 from django.utils.safestring import mark_safe
+from django.contrib.auth.models import User
 
 
 class Parasite(models.Model):
@@ -132,3 +133,11 @@ class Session(models.Model):
                                    on_delete=models.CASCADE)
     desc = models.TextField(blank=True, null=True)
     title = models.TextField(blank=False, null=False)
+
+
+class PhotohuntPlayRecord(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    saved_at = models.DateTimeField(null=True)
+    score = models.IntegerField(default=0)
+    session = models.ForeignKey(Session, on_delete=models.CASCADE)
