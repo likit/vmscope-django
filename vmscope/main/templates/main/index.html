@@ -73,23 +73,15 @@
                             <h2 class="subtitle is-size-6">
                                 ตอบคำถามจากรูปภาพเพื่อฝึกทักษะการตรวจหาเชื้อโรคและอื่นๆ จากลักษณะรูปร่าง
                             </h2>
-                            <div class="panel">
-                                <p>This part is under minor update and will be available soon.</p>
-                                <!--
-                                {% for subject in photohunt_dcps %}
-                                <a href="{% url 'photohunt:show_discipline' subject.pk %}"
-                                   class="panel-block">
-                                    <span class="panel-icon">
-                                        <i class="far fa-hand-point-right has-text-info"
-                                           aria-hidden="true"></i>
-                                    </span>
-                                    <span>
-                                        {{ subject|title }}
-                                    </span>
-                                </a>
-                                -->
-                                {% endfor %}
-                            </div>
+                            {% for subject in photohunt_dcps %}
+                            <a href="{% url 'photohunt:show_discipline' subject.pk %}">
+                                <span class="icon is-large">
+                                    <i class="fas fa-caret-square-right fa-2x"></i>
+                                </span>
+                                <span class="is-size-3">{{ subject|title }}</span>
+                            </a>
+                            {% endfor %}
+                        </div>
                         </div>
                     </div>
                 </div>
