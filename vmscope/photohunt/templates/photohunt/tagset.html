@@ -2,6 +2,11 @@
 {% block page_content %}
 {% load static %}
 <section class="hero is-info is-small">
+    <div class="hero-head">
+        {% block navbar %}
+        {% include 'navbar.html' %}
+        {% endblock %}
+    </div>
     <div class="hero-body">
         <div class="container">
             <h1 class="title">Photo number {{ tagset_number }}</h1>
@@ -15,9 +20,12 @@
     <div class="container">
         <div class="columns">
             <div class="column">
-                <canvas id="imageCanvas" width="800" height="800"></canvas>
+                <canvas id="imageCanvas" width="800" height="600"></canvas>
             </div>
             <div class="column">
+                <progress class="progress is-success"
+                          value="{{ tsnum }}"
+                          max="{{ session.tagsets.all|length }}">{{ tsnum }}</progress>
                 <form method="post">
                 {% csrf_token %}
                 {% for tag in tagset.tags.all %}
@@ -47,20 +55,17 @@
                 <input type="hidden" name="tsnum" value="{{ tsnum }}">
                 <input type="hidden" name="session_pk" value="{{ session.pk }}">
                 <input type="hidden" name="record_pk" value="{{ record_pk }}">
-                <div class="control">
-                    <button class="button is-info" type="submit"><strong>Next</strong></button>
-                    <a href="{% url "photohunt:show_program" pk=session.program.pk %}" class="button is-danger">Quit</a>
+                <div class="field is-grouped is-grouped-right">
+                    <div class="control">
+                        <button class="button is-info" type="submit"><strong>Next</strong></button>
+                    </div>
+                    <div class="control">
+                        <a href="{% url "photohunt:show_program" pk=session.program.pk %}" class="button is-danger">Quit</a>
+                    </div>
                 </div>
                 </form>
             </div>
         </div>
-    </div>
-</section>
-<section class="section">
-    <div class="container">
-        <progress class="progress is-success"
-                  value="{{ tsnum }}"
-                  max="{{ session.tagsets.all|length }}">{{ tsnum }}</progress>
     </div>
 </section>
 {% endblock %}
@@ -75,13 +80,13 @@
         stage.addChild(bitmap);
         var t;
         for (var i=0; i<tags.length; i++) {
-            var arrow = new createjs.Bitmap("{% static "img/cursor-white.png" %}");
-            arrow.x = tags[i].x;
-            arrow.y = tags[i].y;
-            arrow.rotation = Math.random() * 180;
-            t = new createjs.Text(tags[i].n.toString(), '22px Arial');
-            t.x = tags[i].x + 20;
-            t.y = tags[i].y; + 15
+            var arrow = new createjs.Bitmap("{% static "img/placeholder.png" %}");
+            arrow.x = tags[i].x - 16;
+            arrow.y = tags[i].y - 34;
+            // arrow.rotation = Math.random() * 180;
+            t = new createjs.Text(tags[i].n.toString(), "bold 18px Arial", "red");
+            t.x = tags[i].x - 5;
+            t.y = tags[i].y - 49;
             stage.addChild(t);
             stage.addChild(arrow);
             arrow.image.onload = function() { stage.update(); }

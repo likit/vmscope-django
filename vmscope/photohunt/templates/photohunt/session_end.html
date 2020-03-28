@@ -2,17 +2,23 @@
 {% block page_content %}
 {% load static %}
 <section class="hero is-success">
-    <div class="hero-body">
-        <h1 class="title">Session Ends</h1>
+    <div class="hero-head">
+        {% block navbar %}
+        {% include 'navbar.html' %}
+        {% endblock %}
+    </div>
+    <div class="hero-body has-text-centered">
+        <img src="{% static "img/gift-box.png" %}" width=120>
+        <h1 class="title is-size-4">Session Summary</h1>
     </div>
 </section>
 <section class="section">
     <div class="columns">
-        <div class="column">
+        <div class="column is-one-third is-offset-4">
             {% for ts,report in results.items %}
-            <p>{{ forloop.counter }}) {{ ts.title }}
-            </p>
-            <table class="table">
+            <div class="box">
+            <p class="title is-size-5">{{ forloop.counter }}) {{ ts.title }}</p>
+            <table class="table is-striped is-fullwidth">
                 <thead>
                 <th>Question</th>
                 <th>Your Answer</th>
@@ -39,19 +45,31 @@
                 </tr>
                 {% endfor %}
             </table>
+            </div>
             {% endfor %}
         </div>
         <div class="column is-one-third">
-            <img src="{% static "img/gift-box.png" %}" width=300>
         </div>
     </div>
-</section>
-<section class="section">
-    <a class="button is-rounded is-info"
-       href="{% url "photohunt:show_tagset" session_pk=session.pk tsnum=0 %}">Back</a>
-    <a href="{% url "photohunt:show_tagset_key" session_pk=session.pk tsnum=0 %}"
-        class="button is-rounded is-warning">
-    คลิกดูรูปเฉลย
-    </a>
+    <div class="buttons is-centered">
+        <a class="button is-warning"
+           href="{% url "photohunt:show_session" pk=session.pk %}">
+            <span class="icon">
+               <i class="fas fa-redo-alt"></i>
+            </span>
+            <span>Start Over</span>
+        </a>
+        <a href="{% url "photohunt:show_tagset_key" session_pk=session.pk tsnum=0 %}"
+            class="button is-success">
+            คลิกดูรูปเฉลย
+        </a>
+        <a href="{% url "photohunt:show_program" pk=session.program.pk %}"
+            class="button is-light">
+            <span class="icon">
+                <i class="fas fa-list-ul"></i>
+            </span>
+            <span>Sessions</span>
+        </a>
+    </div>
 </section>
 {% endblock %}

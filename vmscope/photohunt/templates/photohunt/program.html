@@ -2,6 +2,11 @@
 {% block page_content %}
 {% load static %}
 <section class="hero is-info">
+    <div class="hero-head">
+        {% block navbar %}
+        {% include 'navbar.html' %}
+        {% endblock %}
+    </div>
     <div class="hero-body">
         <h1 class="title is-3">{{ program.title|title }}</h1>
         <p class="subtitle is-4">{{ program.description }}</p>
@@ -25,9 +30,19 @@
         </div>
     </div>
     {% endfor %}
-    <div class="container has-text-centered">
-        <a class="button is-rounded is-danger" href="{% url "photohunt:show_discipline" pk=program.discipline.pk %}">Back</a>
-        <a class="button is-rounded is-light" href="/">Home</a>
+    <div class="buttons is-centered">
+        <a class="button is-danger" href="{% url "photohunt:show_discipline" pk=program.discipline.pk %}">
+            <span class="icon">
+                <i class="far fa-arrow-alt-circle-left"></i>
+            </span>
+            <span>Back</span>
+        </a>
+        <a class="button is-light" href="/">
+            <span class="icon">
+                <i class="fas fa-home"></i>
+            </span>
+            <span>Home</span>
+        </a>
     </div>
 </section>
 {% endblock %}

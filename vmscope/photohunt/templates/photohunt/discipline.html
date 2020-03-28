@@ -2,6 +2,11 @@
 {% block page_content %}
 {% load static %}
 <section class="hero is-info">
+    <div class="hero-head">
+        {% block navbar %}
+        {% include 'navbar.html' %}
+        {% endblock %}
+    </div>
     <div class="hero-body">
     <h1 class="title">{{ discipline.title|title }}</h1>
     </div>
@@ -23,9 +28,14 @@
             </div>
         </div>
         {% endfor %}
-    <div class="container has-text-centered">
-        <a class="button is-rounded is-light" href="/">Home</a>
-    </div>
+        <div class="container has-text-centered">
+            <a class="button is-light" href="/">
+                <span class="icon">
+                    <i class="fas fa-home"></i>
+                </span>
+                <span>Home</span>
+            </a>
+        </div>
     </div>
 </section>
 {% endblock %}
