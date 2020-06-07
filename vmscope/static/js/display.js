@@ -49,6 +49,7 @@ var stageTemp = [];
 var eggInfoId = [1,1,1,1,5,3,3,3,3,7,7,7,7,4,4,4,6,6,6,6];
 var parasite_list = [];
 var artifact_list = [];
+var showHint = false;
 
 
 var stage,
@@ -225,6 +226,7 @@ function draw() {
             image.addEventListener('click', function(e) { imageClickHandler(e); });
             image.rotation = Math.random() * 360;
             image.objType = 'egg';
+            image.shadow = new createjs.Shadow("#FFFFFF",0, 0, 5);
             // image.infoId = eggInfoId[eggIndex];
             eggs.push(image);
         }
@@ -249,6 +251,7 @@ function draw() {
                 }
                 image.rotation = Math.random() * 360;
                 image.objType = 'artifact';
+                image.shadow = new createjs.Shadow("#FFFFFF",0, 0, 5);
                 artifacts.push(image);
             }
         }
@@ -277,6 +280,7 @@ function draw() {
                 d.rotation = Math.random() * 360;
                 d.x = Math.random() * 700;
                 d.y = Math.random() * 700;
+                d.shadow = new createjs.Shadow("#FFFFFF",0, 0, 5);
                 floatings.push(d);
             }
         }
@@ -492,6 +496,20 @@ function tick() {
 function to_draw() {
     draw();
     $('body').loading('stop');
+}
+
+function toggleHint() {
+    showHint = !showHint;
+    createjs.Ticker.setPaused(true);
+    eggs.forEach(e=>{
+        if (showHint) {
+            e.shadow = new createjs.Shadow("#09d654",0, 0, 5);
+        } else {
+            e.shadow = new createjs.Shadow("#FFFFFF",0, 0, 5);
+        }
+    });
+    stage.update();
+    createjs.Ticker.setPaused(false);
 }
 
 run();

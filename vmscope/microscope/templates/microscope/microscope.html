@@ -87,6 +87,12 @@
                                    data-bind="click: function(data, event) { moveEgg('down', 40); }"></i>
                             </span>
                         </button>
+                        <button class="button is-large is-dark">
+                            <span class="icon is-large">
+                                <i class="fas fa-map-marker-alt has-text-info"
+                                   data-bind="click: toggleHint"></i>
+                            </span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -96,6 +102,16 @@
                         <p>
                             For a notebook or a desktop computer, use arrow keys to navigate and press
                             <span class="tag is-info is-large">Z</span> to zoom in and out.
+                        </p>
+                        <p>
+                            Click
+                            <button class="button is-dark">
+                                <span class="icon is-large">
+                                    <i class="fas fa-map-marker-alt has-text-info"
+                                       data-bind="click: toggleHint"></i>
+                                </span>
+                            </button>
+                            to turn on/off a hint.
                         </p>
                     </div>
                 </div>
