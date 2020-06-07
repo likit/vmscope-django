@@ -12,7 +12,7 @@
 </style>
 {% endblock %}
 {% block page_content %}
-<section class="section" style="background-color: black">
+<section class="section" style="background-color: black" id="app">
     <div class="columns is-centered" style="background-color: black;"> <!-- instruction/information panel -->
         <div class="column is-3" style="background-color: black">
             <div class="panel is-info" style="background-color: white">
@@ -54,13 +54,13 @@
                         <button class="button is-large is-dark">
                             <span class="icon">
                                 <i class="fas fa-angle-up fa-2x has-text-info"
-                                   data-bind="click: function(data, event) { moveEgg('up', 40); }"></i>
+                                   @click="handleMoveEgg('up', 40)"></i>
                             </span>
                         </button>
                         <button class="button is-large is-dark">
                             <span class="icon is-large">
                                 <i class="fas fa-angle-left fa-2x has-text-info"
-                                   data-bind="click: function(data, event) { moveEgg('left', 40); }"></i>
+                                   @click="handleMoveEgg('left', 40)"></i>
                             </span>
                         </button>
                         <button data-bind="click: zoom, visible: !isZoomed()" class="button is-large is-dark">
@@ -78,19 +78,19 @@
                         <button class="button is-large is-dark">
                             <span class="icon is-large">
                                 <i class="fas fa-angle-right fa-2x has-text-info"
-                                   data-bind="click: function(data, event) { moveEgg('right', 40); }"></i>
+                                   @click="handleMoveEgg('right', 40)"></i>
                             </span>
                         </button>
                         <button class="button is-large is-dark">
                             <span class="icon is-large">
                                 <i class="fas fa-angle-down fa-2x has-text-info"
-                                   data-bind="click: function(data, event) { moveEgg('down', 40); }"></i>
+                                   @click="handleMoveEgg('down', 40)"></i>
                             </span>
                         </button>
                         <button class="button is-large is-dark">
                             <span class="icon is-large">
                                 <i class="fas fa-map-marker-alt has-text-info"
-                                   data-bind="click: toggleHint"></i>
+                                   @click="toggleHint()"></i>
                             </span>
                         </button>
                     </div>
@@ -122,7 +122,7 @@
 {% block scripts %}
 <script type="text/javascript" src="{% static 'js/vendors/jquery.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/vendors/jquery.loading.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/vendors/knockout.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/vendors/vue.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/vendors/createjs.min.js' %}"></script>
 <script type="text/javascript">
     var scopeId = {{scope.pk}};
