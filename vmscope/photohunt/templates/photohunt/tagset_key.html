@@ -70,13 +70,13 @@
         stage.addChild(bitmap);
         var t;
         for (var i=0; i<tags.length; i++) {
-            var arrow = new createjs.Bitmap("{% static "img/cursor-white.png" %}");
-            arrow.x = tags[i].x;
-            arrow.y = tags[i].y;
-            arrow.rotation = Math.random() * 180;
-            t = new createjs.Text(tags[i].n.toString(), '22px Arial');
-            t.x = tags[i].x + 20;
-            t.y = tags[i].y; + 15
+            var arrow = new createjs.Bitmap("{% static "img/placeholder.png" %}");
+            arrow.x = tags[i].x - 16;
+            arrow.y = tags[i].y - 34;
+            // arrow.rotation = Math.random() * 180;
+            t = new createjs.Text(tags[i].n.toString(), "bold 18px Arial", "red");
+            t.x = tags[i].x - 5;
+            t.y = tags[i].y - 49;
             stage.addChild(t);
             stage.addChild(arrow);
             arrow.image.onload = function() { stage.update(); }
