@@ -9,6 +9,20 @@
     <div class="container">
         <div class="columns">
             <div class="column is-one-third is-offset-4">
+                {% if form.errors %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                        <div class="notification is-warning">
+                            {{ error|escape }}
+                        </div>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <div class="notification is-warning">
+                            {{ error|escape }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
                 <div class="box">
                     <h2 class="title has-text-centered">Log In</h2>
                     <form method="post">
