@@ -6,30 +6,10 @@ const ARROW_KEY_RIGHT = 39;
 const ARROW_KEY_DOWN = 40;
 const Z = 90;
 
-var viewModel = function() {
-  var self = this;
-  self.lastFoundEggInfoId = ko.observable(0);
-  self.foundEggs = ko.observableArray([]);
-  self.numEggs = ko.observable();
-  self.isZoomed = ko.observable(false);
-  self.numEggsFound = ko.computed(function() {
-    return ko.utils.arrayFilter(self.foundEggs(), function(item) {
-      return item.objType == 'egg';
-    });
-  });
-  self.numArtifactsFound = ko.computed(function() {
-    return ko.utils.arrayFilter(self.foundEggs(), function(item) {
-      return item.objType == 'artifact';
-    });
-  });
-}
 
 var imageClickHandler = function(event) {
   // pass
 }
-
-var vm = new viewModel();
-ko.applyBindings(vm);
 
 var unzoomedPositions = [];
 var centerX = 360;
@@ -498,18 +478,26 @@ function to_draw() {
     $('body').loading('stop');
 }
 
-function toggleHint() {
-    showHint = !showHint;
-    createjs.Ticker.setPaused(true);
-    eggs.forEach(e=>{
-        if (showHint) {
-            e.shadow = new createjs.Shadow("#09d654",0, 0, 5);
-        } else {
-            e.shadow = new createjs.Shadow("#FFFFFF",0, 0, 5);
-        }
-    });
-    stage.update();
-    createjs.Ticker.setPaused(false);
-}
-
 run();
+
+var vm = new Vue({
+    el: '#app',
+    methods: {
+        toggleHint: function() {
+            showHint = !showHint;
+            createjs.Ticker.setPaused(true);
+            eggs.forEach(e=>{
+                if (showHint) {
+                    e.shadow = new createjs.Shadow("#09d654",0, 0, 5);
+                } else {
+                    e.shadow = new createjs.Shadow("#FFFFFF",0, 0, 5);
+                }
+            });
+            stage.update();
+            createjs.Ticker.setPaused(false);
+        },
+        handleMoveEgg: function(dir, step) {
+            moveEgg(dir, step);
+        }
+    }
+})
