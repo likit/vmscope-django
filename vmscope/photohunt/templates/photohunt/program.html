@@ -1,18 +1,15 @@
 {% extends 'base.html' %}
 {% block page_content %}
 {% load static %}
+{% include 'navbar.html' %}
 <section class="hero is-info">
-    <div class="hero-head">
-        {% block navbar %}
-        {% include 'navbar.html' %}
-        {% endblock %}
-    </div>
     <div class="hero-body">
         <h1 class="title is-3">{{ program.title|title }}</h1>
         <p class="subtitle is-4">{{ program.description }}</p>
     </div>
 </section>
 <section class="section">
+    <div class="container">
     {% for session in program.sessions.all %}
     <div class="box media">
         <div class="media-left">
@@ -43,6 +40,7 @@
             </span>
             <span>Home</span>
         </a>
+    </div>
     </div>
 </section>
 {% endblock %}

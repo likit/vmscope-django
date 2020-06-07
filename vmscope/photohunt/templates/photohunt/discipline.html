@@ -1,12 +1,8 @@
 {% extends 'base.html' %}
 {% block page_content %}
 {% load static %}
+{% include 'navbar.html' %}
 <section class="hero is-info">
-    <div class="hero-head">
-        {% block navbar %}
-        {% include 'navbar.html' %}
-        {% endblock %}
-    </div>
     <div class="hero-body">
     <h1 class="title">{{ discipline.title|title }}</h1>
     </div>

@@ -1,12 +1,8 @@
 {% extends "base.html" %}
 {% block page_content %}
 {% load static %}
+{% include 'navbar.html' %}
 <section class="hero is-info is-small">
-    <div class="hero-head">
-        {% block navbar %}
-        {% include 'navbar.html' %}
-        {% endblock %}
-    </div>
     <div class="hero-body">
         <div class="container">
             <h1 class="title">Photo number {{ tagset_number }}</h1>

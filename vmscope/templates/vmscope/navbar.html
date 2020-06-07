@@ -1,14 +1,10 @@
 {% load static %}
-<nav class="navbar is-info" role="navigation" aria-label="main navigation">
+<nav class="navbar is-info">
+    <div class="container">
     <div class="navbar-brand">
-        <a class="navbar-item" href="https://bulma.io">
-            <figure class="image is-32x32">
-                <a href="/">
-                    <img src="{% static "img/microscope.png" %}"/>
-                </a>
-            </figure>
+        <a href="/" class="navbar-item">
+            <img src="{% static "img/microscope.png" %}" alt="Logo" />
         </a>
-
         <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
@@ -18,28 +14,32 @@
 
     <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
+            <a class="navbar-item is-rounded is-outlined is-info"
+                href="/">
+                <span>หน้าหลัก</span>
+            </a>
+            <!--
+            <a class="navbar-item is-rounded is-outlined is-info">
+                <span class="icon">
+                    <i class="fas fa-book"></i>
+                </span>
+                <span>Articles</span>
+            </a>
+            -->
         </div>
         <div class="navbar-end">
             {% if user.is_authenticated %}
-            <div class="navbar-item">
-                <a class="navbar-item is-rounded is-outlined is-info">
-                    <span class="icon">
-                        <i class="fas fa-book"></i>
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link">
+                    <span class="icon is-medium">
+                        <i class="fas fa-user-circle"></i>
                     </span>
-                    <span>Articles</span>
+                    <span>{{ user.username }}</span>
                 </a>
-                <div class="navbar-item has-dropdown is-hoverable">
-                    <a class="navbar-link">
-                        <span class="icon is-medium">
-                            <i class="fas fa-user-circle"></i>
-                        </span>
-                        <span>{{ user.username }}</span>
+                <div class="navbar-dropdown">
+                    <a class="navbar-item" href="{% url 'edit_profile' %}">
+                        Profile
                     </a>
-                    <div class="navbar-dropdown">
-                        <a class="navbar-item" href="{% url 'edit_profile' %}">
-                            Profile
-                        </a>
-                    </div>
                 </div>
             </div>
             <div class="navbar-item">
@@ -62,5 +62,6 @@
             </div>
             {% endif %}
         </div>
+    </div>
     </div>
 </nav>
