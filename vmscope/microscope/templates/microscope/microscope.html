@@ -90,7 +90,7 @@
                         <button class="button is-large is-dark">
                             <span class="icon is-large">
                                 <i class="fas fa-map-marker-alt has-text-info"
-                                   data-bind="click: toggleHint"></i>
+                                   data-bind="click: function() { toggleHint(); }"></i>
                             </span>
                         </button>
                     </div>
@@ -107,8 +107,7 @@
                             Click
                             <button class="button is-dark">
                                 <span class="icon is-large">
-                                    <i class="fas fa-map-marker-alt has-text-info"
-                                       data-bind="click: toggleHint"></i>
+                                    <i class="fas fa-map-marker-alt has-text-info"></i>
                                 </span>
                             </button>
                             to turn on/off a hint.
