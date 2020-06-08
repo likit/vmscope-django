@@ -51,46 +51,46 @@
             <div class="columns is-centered">
                 <div class="column is-narrow">
                     <div class="buttons is-centered">
-                        <button class="button is-large is-dark">
+                        <button class="button is-large is-dark"
+                                @click="handleMoveEgg('up', 40)">
                             <span class="icon">
-                                <i class="fas fa-angle-up fa-2x has-text-info"
-                                   @click="handleMoveEgg('up', 40)"></i>
+                                <i class="fas fa-angle-up fa-2x has-text-info"></i>
                             </span>
                         </button>
                         <button class="button is-large is-dark">
-                            <span class="icon is-large">
-                                <i class="fas fa-angle-left fa-2x has-text-info"
-                                   @click="handleMoveEgg('left', 40)"></i>
+                            <span class="icon is-large"
+                                  @click="handleMoveEgg('left', 40)">
+                                <i class="fas fa-angle-left fa-2x has-text-info"></i>
                             </span>
                         </button>
-                        <button data-bind="click: zoom, visible: !isZoomed()" class="button is-large is-dark">
+                        <button @click="handleZoom()" v-if="!isZoomed" class="button is-large is-dark">
                             <span class="icon">
                                 <i class="fas fa-sync-alt"></i>
                             </span>
                             <span>10x</span>
                         </button>
-                        <button data-bind="click: zoom, visible: isZoomed()" class="button is-large is-dark">
+                        <button @click="handleZoom()" v-if="isZoomed" class="button is-large is-dark">
                             <span class="icon">
                                 <i class="fas fa-sync-alt"></i>
                             </span>
                             <span>40x</span>
                         </button>
-                        <button class="button is-large is-dark">
+                        <button class="button is-large is-dark"
+                                @click="handleMoveEgg('right', 40)">
                             <span class="icon is-large">
-                                <i class="fas fa-angle-right fa-2x has-text-info"
-                                   @click="handleMoveEgg('right', 40)"></i>
+                                <i class="fas fa-angle-right fa-2x has-text-info"></i>
                             </span>
                         </button>
-                        <button class="button is-large is-dark">
+                        <button class="button is-large is-dark"
+                                @click="handleMoveEgg('down', 40)">
                             <span class="icon is-large">
-                                <i class="fas fa-angle-down fa-2x has-text-info"
-                                   @click="handleMoveEgg('down', 40)"></i>
+                                <i class="fas fa-angle-down fa-2x has-text-info"></i>
                             </span>
                         </button>
-                        <button class="button is-large is-dark">
+                        <button class="button is-large is-dark" @click="toggleHint()">
                             <span class="icon is-large">
-                                <i class="fas fa-map-marker-alt has-text-info"
-                                   @click="toggleHint()"></i>
+                                <i v-if="!showHint" class="fas fa-map-marker-alt has-text-info"></i>
+                                <i v-if="showHint" class="fas fa-map-marker-alt has-text-success"></i>
                             </span>
                         </button>
                     </div>
@@ -160,10 +160,8 @@
     var floatings = [];
     var artifacts = [];
     var stageTemp = [];
-    var eggInfoId = [1,1,1,1,5,3,3,3,3,7,7,7,7,4,4,4,6,6,6,6];
     var parasite_list = [];
     var artifact_list = [];
-    var showHint = false;
 
 
     var stage,
@@ -437,16 +435,7 @@
         createjs.Ticker.setFPS(30);
     }
 
-    function zoom() {
-        if(vm.isZoomed()===true) {
-            zoomOut();
-        } else {
-            zoomIn();
-        }
-    }
-
     function zoomIn() {
-        vm.isZoomed(true);
         unzoomedPositions = [];
         var p;
         centerXZoom = centerX;
@@ -467,7 +456,6 @@
     }
 
     function zoomOut() {
-        vm.isZoomed(false);
         var deltaX = centerXZoom - centerX;
         var deltaY = centerYZoom - centerY;
         for(var i=0; i<stageTemp.length; i++) {
@@ -616,12 +604,18 @@
 
     var vm = new Vue({
         el: '#app',
+        data() {
+            return {
+                isZoomed: false,
+                showHint: false,
+            }
+        },
         methods: {
             toggleHint: function() {
-                showHint = !showHint;
+                this.showHint = !this.showHint;
                 createjs.Ticker.setPaused(true);
                 eggs.forEach(e=>{
-                    if (showHint) {
+                    if (this.showHint) {
                         e.shadow = new createjs.Shadow("#09d654",0, 0, 5);
                     } else {
                         e.shadow = new createjs.Shadow("#FFFFFF",0, 0, 5);
@@ -632,10 +626,18 @@
             },
             handleMoveEgg: function(dir, step) {
                 moveEgg(dir, step);
+            },
+            handleZoom: function() {
+                if(this.isZoomed===true) {
+                    zoomOut();
+                    this.isZoomed = false;
+                } else {
+                    zoomIn();
+                    this.isZoomed = true;
+                }
             }
         }
     })
 
 </script>
 {% endblock %}
-
