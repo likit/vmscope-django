@@ -34,7 +34,7 @@ if os.environ.get('DEBUG', 'False') == 'TRUE':
 else:
     DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', '178.128.16.81', 'vmscope.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '178.128.16.81', 'vmscope.herokuapp.com']
 
 
 # Application definition

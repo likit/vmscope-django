@@ -24,19 +24,39 @@
 {% block scripts %}
 <script type="text/javascript" src="{% static 'js/vendors/createjs.min.js' %}"></script>
 <script>
-    var stage = new createjs.Stage("imageCanvas");
-    var bitmap = new createjs.Bitmap("{{ image.image.url }}");
-    bitmap.addEventListener("click", handleClick);
-    var text = new createjs.Text("", "20px Arial");
-    stage.addChild(bitmap);
-    stage.addChild(text);
-    stage.update();
     function handleClick(event) {
         text.x = event.localX.toFixed(2);
         text.y = event.localY.toFixed(2);
         text.text = 'x=' + text.x + ', y=' + text.y;
         stage.update();
     }
+
+    function loadItem(url) {
+        //Add the event listener and handler
+        queue.on("fileload", function (event) {
+
+            var type = event.item.type;
+            if (type == createjs.LoadQueue.IMAGE) {
+                //make a CreateJS Bitmap object from the result
+                var imgItem = event.result;
+                image = new createjs.Bitmap(imgItem.src);
+                image.addEventListener("click", handleClick);
+                stage.addChild(image);
+                stage.update();
+            }
+        }, null, true, {});
+
+        var loadItem = new createjs.LoadItem().set({src: url, crossOrigin: "Anonymous"});
+        //load it
+        queue.loadFile(loadItem);
+    }
+
+    var queue = new createjs.LoadQueue(true, null, true);
+    var stage = new createjs.Stage("imageCanvas");
+    loadItem("{{ image.image.url }}");
+    var text = new createjs.Text("", "20px Arial");
+    stage.addChild(text);
+    stage.update();
 </script>
 {% endblock %}
 
