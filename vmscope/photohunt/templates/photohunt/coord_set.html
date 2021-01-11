@@ -37,16 +37,15 @@
         var bmp = new createjs.Bitmap(image);
         bmp.addEventListener("click", handleClick);
         stage.addChild(bmp);
+        stage.addChild(text);
         stage.update();
     }
 
     var stage = new createjs.Stage("imageCanvas");
     var queue = new createjs.LoadQueue(false);
+    var text = new createjs.Text("", "20px Arial");
     queue.on('complete', handleComplete)
     queue.loadFile({src:"{{ image.image.url }}", crossOrigin:true, id:"image"});
-    var text = new createjs.Text("", "20px Arial");
-    stage.addChild(text);
-    stage.update();
 </script>
 {% endblock %}
 
