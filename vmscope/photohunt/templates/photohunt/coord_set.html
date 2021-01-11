@@ -46,7 +46,7 @@
             }
         }, null, true, {});
 
-        var loadItem = new createjs.LoadItem().set({src: url, crossOrigin: "Anonymous"});
+        var loadItem = new createjs.LoadItem().set({src: url, crossOrigin: true});
         //load it
         queue.loadFile(loadItem);
     }
