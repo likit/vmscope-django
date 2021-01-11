@@ -43,7 +43,7 @@
 
     var stage = new createjs.Stage("imageCanvas");
     var queue = new createjs.LoadQueue(false);
-    var text = new createjs.Text("", "20px Arial");
+    var text = new createjs.Text().set({text: "", font: "20px Arial", lineWidth: 50});
     queue.on('complete', handleComplete)
     queue.loadFile({src:"{{ image.image.url }}", crossOrigin:true, id:"image"});
 </script>
