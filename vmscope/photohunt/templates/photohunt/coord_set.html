@@ -31,29 +31,19 @@
         stage.update();
     }
 
-    function loadItem(url) {
+    function handleComplete(event) {
         //Add the event listener and handler
-        queue.on("fileload", function (event) {
-
-            var type = event.item.type;
-            if (type == createjs.LoadQueue.IMAGE) {
-                //make a CreateJS Bitmap object from the result
-                var imgItem = event.result;
-                image = new createjs.Bitmap(imgItem.src);
-                image.addEventListener("click", handleClick);
-                stage.addChild(image);
-                stage.update();
-            }
-        }, null, true, {});
-
-        var loadItem = new createjs.LoadItem().set({src: url});
-        //load it
-        queue.loadFile(loadItem);
+        var image = queue.getResult('image')
+        var bmp = new createjs.Bitmap(image);
+        bmp.addEventListener("click", handleClick);
+        stage.addChild(bmp);
+        stage.update();
     }
 
-    var queue = new createjs.LoadQueue(true, null, true);
     var stage = new createjs.Stage("imageCanvas");
-    loadItem("{{ image.image.url }}");
+    var queue = new createjs.LoadQueue(false);
+    queue.on('complete', handleComplete)
+    queue.loadFile({src:"{{ image.image.url }}", crossOrigin:true, id:"image"});
     var text = new createjs.Text("", "20px Arial");
     stage.addChild(text);
     stage.update();
